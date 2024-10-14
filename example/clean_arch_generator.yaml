@@ -1,0 +1,14 @@
+clean_arch_generator:
+  features_directory: lib/features
+  entities:
+    - generate: false
+    - directory: lib/entities
+    - path: lib/entities
+  features:
+    - generate: true
+
+  base_export_file: lib/base_export.dart
+
+  exclude:
+    - '**/*.g.dart'
+    - '**/test/**'
