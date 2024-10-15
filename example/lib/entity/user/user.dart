@@ -1,5 +1,5 @@
 import 'package:example/entity/address/address.dart';
-import 'package:flutter_clean_arch_generator/domain/entity/utils/entity_item.dart';
+import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
 final EntityItem userEntity = EntityItem(entityName: 'User', entityParams: [
   EntityParams(objectType: String, objectNameKey: 'id'),

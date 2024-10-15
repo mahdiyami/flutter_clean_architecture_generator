@@ -4,7 +4,7 @@ part of 'file_generator.dart';
 class _CleanArchDomainFileGenerator extends CleanArchFileGenerator {
   _CleanArchDomainFileGenerator(super.feature);
 
-  String get currentFeatureDomain => "${config.rootDirectory}/${feature.featureName}/domain";
+  String get currentFeatureDomain => "${config.rootDirectory}/${feature.featureName}/clean_arch_layer_generator.domain";
   String get _repositoryDirectory => "$currentFeatureDomain/repository";
   String get _useCaseDirectory => "$currentFeatureDomain/use_case";
 

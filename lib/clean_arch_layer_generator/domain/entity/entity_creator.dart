@@ -1,6 +1,6 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:flutter_clean_arch_generator/domain/entity/base_entity_creator.dart';
-import 'package:flutter_clean_arch_generator/domain/entity/utils/entity_item.dart';
+import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
+
 
 class EntityCreator extends BaseEntityCreator {
   EntityCreator({required super.items});

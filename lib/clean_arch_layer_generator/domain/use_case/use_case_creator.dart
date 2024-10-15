@@ -1,6 +1,5 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:flutter_clean_arch_generator/domain/use_case/base_use_case_creator.dart';
-import 'package:flutter_clean_arch_generator/utils/method_item.dart';
+import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
 class UseCaseCreator extends BaseUseCaseCreator {
   UseCaseCreator({required super.feature});

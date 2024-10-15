@@ -3,7 +3,6 @@ clean_arch_generator:
   entities:
     - generate: false
     - directory: lib/entities
-    - path: lib/entities
   features:
     - generate: true
 

@@ -46,14 +46,12 @@ class CleanArchYamlConfig {
 
 class YamlConfigEntity {
   final String? directory;
-  final String? path;
 
-  YamlConfigEntity({required this.directory, required this.path});
+  YamlConfigEntity({required this.directory,});
 
   factory YamlConfigEntity.fromYaml(Map yaml) {
     return YamlConfigEntity(
       directory: yaml['directory'] as String?,
-      path: yaml['path'] as String?,
     );
   }
 }

@@ -5,8 +5,8 @@ import 'package:flutter_clean_arch_generator/file_generator/mixin/file_creator_u
 import 'package:flutter_clean_arch_generator/utils/method_item.dart';
 import 'package:flutter_clean_arch_generator/yaml_config/clean_arch_yaml_config.dart';
 
-part 'data_layer_generator.dart';
-part 'domain_layer_generator.dart';
+part 'data_layer_generator.p.dart';
+part 'domain_layer_generator.p.dart';
 
 abstract class CleanArchFileGenerator with FileCreatorUtils {
   final CleanArchFeature feature;
