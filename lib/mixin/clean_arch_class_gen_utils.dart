@@ -9,6 +9,20 @@ mixin class CleanArchClassGenUtils {
     return '${featureName.firstLetterUpperCase}Repository';
   }
 
+  String entityName(String entityName) {
+    return '${entityName.firstLetterUpperCase}Entity';
+  }
+
+  String modelName(String entityName) {
+    return '${entityName.firstLetterUpperCase}Model';
+  }
+  String modelFreezedMixinName(String entityName) {
+    return '_\$${entityName.firstLetterUpperCase}Model';
+  }
+  String modelConstructorFreezedMixinName(String entityName) {
+    return '_${entityName.firstLetterUpperCase}Model';
+  }
+
   String useCaseName(String methodName) {
     return '${methodName.firstLetterUpperCase}UseCase';
   }

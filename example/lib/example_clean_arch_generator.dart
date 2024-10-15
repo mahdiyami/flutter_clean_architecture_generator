@@ -1,5 +1,5 @@
 import 'package:example/entity/address/address.dart';
-import 'package:example/entity/auth/auth_check.dart';
+import 'package:example/entity/auth/check_auth.dart';
 import 'package:example/entity/user/user.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
@@ -10,11 +10,11 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
   @override
   List<CleanArchFeature> get features => [
         ExampleCleanArchFeature(featureName: "auth", entities: [
-          authCheckEntity,
+          checkAuthEntity,
           userEntity,
         ], methodItems: [
           MethodItem(
-            responseEntity: authCheckEntity,
+            responseEntity: checkAuthEntity,
             params: String,
             methodName: 'checkAuth',
             response: BaseResponseNames.baseResponse,

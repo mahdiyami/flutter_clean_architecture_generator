@@ -21,3 +21,12 @@ class EntityParams {
 
   EntityParams({required this.objectType, required this.objectNameKey, this.jsonKey, this.nullable = false});
 }
+
+extension OnEntityParams on EntityParams {
+  String get convertObjectTypeEntityToModel {
+    return objectType.toString().replaceAll('Entity', 'Model');
+  }
+
+
+
+}

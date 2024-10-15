@@ -4,8 +4,12 @@ library flutter_clean_arch_generator;
 
 export 'clean_arch_generator.dart';
 export 'clean_arch_generator_config.dart';
+export 'clean_arch_layer_generator/data/models/base_model_creator.dart';
+export 'clean_arch_layer_generator/data/models/extension.dart';
+export 'clean_arch_layer_generator/data/models/model_creator.dart';
 export 'clean_arch_layer_generator/domain/entity/base_entity_creator.dart';
 export 'clean_arch_layer_generator/domain/entity/entity_creator.dart';
+export 'clean_arch_layer_generator/domain/entity/extension.dart';
 export 'clean_arch_layer_generator/domain/entity/utils/entity_item.dart';
 export 'clean_arch_layer_generator/domain/repository/base_repository_creator.dart';
 export 'clean_arch_layer_generator/domain/repository/extension.dart';

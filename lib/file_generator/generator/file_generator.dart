@@ -24,12 +24,16 @@ abstract class CleanArchFileGenerator with FileCreatorUtils {
 //Domain Layer
   Future<void> createEntityFile(String content , {required CleanArchEntityItem item}) async {}
 
+
   Future<void> createRepositoryFile(String content) async {}
 
   Future<void> createUseCaseFile(String content , {required MethodItem methodItem}) async {}
 
 //Data Layer
   Future<void> createRepositoryImplFile(String content) async {}
+
+  Future<void> createModelFile(String content , {required CleanArchEntityItem item}) async {}
+
 
   Future<void> createRemoteDataSourceFile(String content) async {}
 

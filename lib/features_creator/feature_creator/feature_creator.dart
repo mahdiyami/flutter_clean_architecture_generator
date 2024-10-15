@@ -10,6 +10,9 @@ class FeatureCreator extends BaseFeatureCreator with CleanArchClassGenUtils {
     RepositoryCreator(feature: feature).repoToCodeAllAndGenerateFiles();
     EntityCreator(feature: feature).entityToCodeAllAndGenerateFiles();
     UseCaseCreator(feature: feature).useCaseToCodeAllAndGenerateFiles();
+
+    ModelCreator(feature: feature).modelToCodeAllAndGenerateFiles();
+
   }
 
   void createFeatureDirectory() {}
