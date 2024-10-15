@@ -10,7 +10,7 @@ class MethodItem {
   final String methodName;
   final Type params;
   final BaseResponseNames response;
-  final EntityItem responseEntity;
+  final CleanArchEntityItem responseEntity;
   final bool isLocalData;
   final bool isCachedResponse;
 

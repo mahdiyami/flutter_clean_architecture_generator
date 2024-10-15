@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter_clean_arch_generator/clean_arch_generator_config.dart';
-import 'package:flutter_clean_arch_generator/file_generator/mixin/file_creator_utils.dart';
-import 'package:flutter_clean_arch_generator/utils/method_item.dart';
-import 'package:flutter_clean_arch_generator/yaml_config/clean_arch_yaml_config.dart';
+import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
+
 
 part 'data_layer_generator.p.dart';
 part 'domain_layer_generator.p.dart';
@@ -24,6 +22,8 @@ abstract class CleanArchFileGenerator with FileCreatorUtils {
   factory CleanArchFileGenerator.createData(CleanArchFeature feature) = _CleanArchDataFileGenerator;
 
 //Domain Layer
+  Future<void> createEntityFile(String content , {required CleanArchEntityItem item}) async {}
+
   Future<void> createRepositoryFile(String content) async {}
 
   Future<void> createUseCaseFile(String content , {required MethodItem methodItem}) async {}

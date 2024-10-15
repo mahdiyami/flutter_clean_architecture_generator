@@ -1,12 +1,13 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
-abstract class BaseEntityCreator {
-  final List<EntityItem> items;
-  const BaseEntityCreator({required this.items});
+abstract class BaseEntityCreator with CleanArchClassGenUtils{
+  final CleanArchFeature feature;
+  const BaseEntityCreator({required this.feature});
 
-  Class create({required EntityItem item});
+  Class createClass(CleanArchEntityItem item);
 
-  List<Class> createAll();
-}
+  String get baseEntityName => 'BaseEntity';
+
+ }
 

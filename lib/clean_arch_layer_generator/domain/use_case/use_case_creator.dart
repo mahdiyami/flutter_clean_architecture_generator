@@ -39,9 +39,4 @@ class UseCaseCreator extends BaseUseCaseCreator {
       },
     );
   }
-
-  @override
-  List<Class> createAll() {
-    throw UnimplementedError();
-  }
 }

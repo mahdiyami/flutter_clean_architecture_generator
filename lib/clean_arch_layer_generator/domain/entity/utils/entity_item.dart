@@ -1,11 +1,11 @@
 import 'package:json_annotation/json_annotation.dart' show JsonKey;
 
 
-class EntityItem {
+class CleanArchEntityItem {
   final String entityName;
   final List<EntityParams> entityParams;
 
-  EntityItem({required this.entityName, required this.entityParams});
+  CleanArchEntityItem({required this.entityName, required this.entityParams});
 
   @override
   String toString() {

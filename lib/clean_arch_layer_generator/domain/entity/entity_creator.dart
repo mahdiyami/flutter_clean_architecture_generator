@@ -1,34 +1,28 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
-
 class EntityCreator extends BaseEntityCreator {
-  EntityCreator({required super.items});
+  EntityCreator({required super.feature});
 
   @override
-  Class create({required EntityItem item}) {
+  Class createClass(CleanArchEntityItem item) {
     return Class((b) => b
       ..name = item.toString()
       ..abstract = true
-      ..extend = refer('BaseEntity')
-      ..methods.add(Method((b) => b
-        ..name = 'registered'
-        ..type = MethodType.getter
-        ..returns = refer('bool')))
-      ..methods.addAll(_entityParams(item: item)));
+      ..extend = refer(baseEntityName)
+      ..methods.addAll(_entityParams(item: item)));;
   }
 
-  List<Method> _entityParams({required EntityItem item}) {
+
+
+  List<Method> _entityParams({required CleanArchEntityItem item}) {
     return item.entityParams
         .map((e) => Method((b) => b
           ..name = e.objectNameKey
           ..type = MethodType.getter
-          ..returns = refer(e.objectType.toString())))
+          ..returns = refer(
+              e.nullable ? '${e.objectType}?' : e.objectType.toString())))
         .toList();
   }
 
-  @override
-  List<Class> createAll() {
-    return items.map((e) => create(item: e)).toList();
-  }
 }

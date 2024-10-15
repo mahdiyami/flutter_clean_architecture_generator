@@ -6,7 +6,5 @@ abstract class BaseRepositoryCreator with CleanArchClassGenUtils {
   final CleanArchFeature feature;
   const BaseRepositoryCreator({required this.feature});
 
-
   Class createClass();
-
 }

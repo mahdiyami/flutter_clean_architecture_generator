@@ -1,7 +1,7 @@
 
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
-final addressEntity = EntityItem(entityName: 'Address', entityParams: [
+final addressEntity = CleanArchEntityItem(entityName: 'Address', entityParams: [
   EntityParams(objectType: String, objectNameKey: 'id'),
   EntityParams(objectType: String, objectNameKey: 'name'),
   EntityParams(objectType: String, objectNameKey: 'phone'),
