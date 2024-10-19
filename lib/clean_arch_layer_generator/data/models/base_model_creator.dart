@@ -9,6 +9,7 @@ abstract class BaseModelCreator with CleanArchClassGenUtils{
 
   String get baseEntityName => 'BaseEntity';
   String get baseModelName => 'BaseModel';
+  String get modelAnnotation => "baseModelFreezed";
   
   String modelFromJsonMethodName(CleanArchEntityItem item) => '_\$${modelName(item.entityName)}ImplFromJson';
 

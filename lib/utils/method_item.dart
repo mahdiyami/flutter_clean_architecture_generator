@@ -11,6 +11,7 @@ class MethodItem {
   final Type params;
   final BaseResponseNames response;
   final CleanArchEntityItem responseEntity;
+  final bool isFuture;
   final bool isLocalData;
   final bool isCachedResponse;
 
@@ -20,6 +21,7 @@ class MethodItem {
     required this.params,
     required this.response,
     required this.responseEntity,
+    this.isFuture = true,
     this.isLocalData = false,
     this.isCachedResponse = false,
   });

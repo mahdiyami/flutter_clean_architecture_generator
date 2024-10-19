@@ -6,32 +6,17 @@ class ModelCreator extends BaseModelCreator {
 
   @override
   Class createClass(CleanArchEntityItem item) {
-    // @baseModelFreezed
-    // class AuthCheckModel extends AuthCheckEntity with _$AuthCheckModel implements BaseModel {
-    // const AuthCheckModel._() : super();
-    //
-    // const factory AuthCheckModel({
-    // required bool registered,
-    // required bool validated,
-    // required bool hasPassword,
-    //
-    // required UserModel user,
-    // }) = _AuthCheckModel;
-    //
-    // factory AuthCheckModel.fromJson(Map<String, dynamic> json) => _$$AuthCheckModelImplFromJson(json);
-    // }
-
-    //create this
 
     return Class((b) => b
-      ..name = 'AuthCheckModel'
-      ..extend = refer('AuthCheckEntity')
+      ..annotations.add(refer(modelAnnotation).call([]))
+      ..name = modelName(item.entityName)
+      ..extend = refer(entityName(item.entityName))
       ..mixins.add(refer(modelFreezedMixinName(item.entityName)))
       ..implements.add(refer(baseModelName))
       ..constructors.add(Constructor((b) => b
         ..constant = true
         ..name = '_'
-        ..initializers.add(Code('super()')) // کانستراکتور فراخوانی می‌شود
+        ..initializers.add(Code('super()'))
       ))
       ..constructors.add(Constructor((b) => b
         ..factory = true
@@ -58,7 +43,7 @@ class ModelCreator extends BaseModelCreator {
       ..name = e.objectNameKey
       ..named = true
       //create function for handle nullable
-      ..type = refer(e.objectType.toString())
+      ..type = refer(e.convertObjectTypeEntityToModel)
         ..required = !e.nullable
       // ..annotations.add(refer('required'))
     ),

@@ -17,6 +17,8 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
             responseEntity: checkAuthEntity,
             params: String,
             methodName: 'checkAuth',
+            isLocalData: true,
+            isFuture: false,
             response: BaseResponseNames.baseResponse,
           ),
           MethodItem(
@@ -25,7 +27,25 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
             methodName: 'confirmAuth',
             response: BaseResponseNames.baseResponse,
           ),
-        ])
+        ]),
+
+    ExampleCleanArchFeature(featureName: "cart", entities: [
+      checkAuthEntity,
+      userEntity,
+    ], methodItems: [
+      MethodItem(
+        responseEntity: checkAuthEntity,
+        params: bool,
+        methodName: 'addToCart',
+        response: BaseResponseNames.baseResponse,
+      ),
+      MethodItem(
+        responseEntity: userEntity,
+        params: String,
+        methodName: 'removeFromCart',
+        response: BaseResponseNames.baseResponse,
+      ),
+    ]),
       ];
 }
 
