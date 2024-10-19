@@ -20,12 +20,20 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
             isLocalData: true,
             isFuture: false,
             response: BaseResponseNames.baseResponse,
+            apiServiceSettings: ApiServiceSettings(
+              endPoint: 'checkAuth',
+              method: CleanArchRestApiMethodType.GET,
+            ),
           ),
           MethodItem(
             responseEntity: userEntity,
             params: String,
             methodName: 'confirmAuth',
-            response: BaseResponseNames.baseResponse,
+            apiServiceSettings: ApiServiceSettings(
+              endPoint: 'confirmAuth',
+              method: CleanArchRestApiMethodType.POST,
+            ),
+            response: BaseResponseNames.noResponse,
           ),
         ]),
 
@@ -38,12 +46,20 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
         params: bool,
         methodName: 'addToCart',
         response: BaseResponseNames.baseResponse,
+        apiServiceSettings: ApiServiceSettings(
+          endPoint: 'addToCart',
+          method: CleanArchRestApiMethodType.POST,
+        ),
       ),
       MethodItem(
         responseEntity: userEntity,
         params: String,
         methodName: 'removeFromCart',
         response: BaseResponseNames.baseResponse,
+        apiServiceSettings: ApiServiceSettings(
+          endPoint: 'removeFromCart',
+          method: CleanArchRestApiMethodType.POST,
+        ),
       ),
     ]),
       ];

@@ -8,7 +8,7 @@ class _CleanArchDataFileGenerator extends CleanArchFileGenerator {
   String get _modelDirectory => "$currentFeatureData/models";
   String get _datasourceDirectory => "$currentFeatureData/data_source";
   String get _remoteDataSourceDirectory => "$_datasourceDirectory/remote";
-  String get _localDataSourceDirectory => "$_datasourceDirectory/local";
+   String get _localDataSourceDirectory => "$_datasourceDirectory/local";
 
   @override
   Future<void> createRepositoryImplFile(String content) async {
@@ -22,6 +22,10 @@ class _CleanArchDataFileGenerator extends CleanArchFileGenerator {
   @override
   Future<void> createRemoteDataSourceFile(String content) async {
     createFile('$_remoteDataSourceDirectory/${feature.featureName}_data_source.dart', content: content);
+  }
+
+  @override
+  Future<void> createRemoteDataSourceImplFile(String content) async {
     createFile('$_remoteDataSourceDirectory/${feature.featureName}_data_source_impl.dart', content: content);
   }
 

@@ -3,8 +3,25 @@ import 'package:flutter_clean_arch_generator/extension/string.dart';
 import 'package:flutter_clean_arch_generator/utils/method_item.dart';
 
 mixin class CleanArchClassGenUtils {
-  String eitherResponse(String responseName) {
-    return 'FutureOr<Either<Failure, $responseName>>';
+  String eitherResponse(MethodItem item) {
+    String future = item.isFuture ? 'FutureOr<Either<Failure, ${item.responseName}<${item.baseResponseType}>>>' : '';
+    if(item.response == BaseResponseNames.noResponse) {
+      return 'FutureOr<Either<Failure, NoResponse>>';
+    }
+    else {
+      return 'FutureOr<>';
+    }
+   }
+  String response(MethodItem item , { bool isModel = false}) {
+    if(item.response == BaseResponseNames.noResponse) {
+      return item.responseName;
+    }
+    else {
+      return '${item.responseName}<${isModel ? item.baseResponseTypeModel: item.baseResponseType}>';
+    }
+  }
+  String futureResponse(String responseName) {
+    return 'FutureOr<$responseName>';
   }
   String remoteDatasourceName(CleanArchFeature feature) {
     return '${feature.featureName.firstLetterUpperCase}RemoteDataSource';
@@ -45,6 +62,9 @@ mixin class CleanArchClassGenUtils {
   }
 
   String modelName(String entityName) {
+    if(entityName.contains("Entity")) {
+      return entityName.replaceAll('Entity', 'Model');
+    }
     return '${entityName.firstLetterUpperCase}Model';
   }
   String modelFreezedMixinName(String entityName) {

@@ -30,7 +30,7 @@ class UseCaseCreator extends BaseUseCaseCreator {
           ..methods.add(Method((b) => b
             ..annotations.add(refer('override'))
             ..name = 'call'
-            ..returns = refer(eitherResponse(response))
+            ..returns = refer(eitherResponse(item))
             ..requiredParameters.add(Parameter((b) => b
               ..name = 'params'
               ..type = refer(params)))

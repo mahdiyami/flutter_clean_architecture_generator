@@ -7,7 +7,6 @@ class RepositoryImplCreator extends BaseRepositoryImplCreator {
   @override
   Class createClass() {
     return Class((b) => b
-      ..abstract = true
       ..name = repositoryImplName(feature.featureName)
       ..extend = refer(repositoryName(feature.featureName))
       ..constructors.add(Constructor((b) => b..requiredParameters.addAll(_parameters())))
@@ -47,11 +46,10 @@ class RepositoryImplCreator extends BaseRepositoryImplCreator {
 
   List<Method> _methodItems() {
     return feature.methodItems.map((e) {
-      String response = "${e.responseName}<${e.baseResponseType}>";
       String params = e.paramsName;
       return Method((b) => b
         ..name = e.methodName
-        ..returns = refer(eitherResponse(response))
+        ..returns = refer(eitherResponse(e))
         ..body = Code('''
         return ${performName(e)} {
           return ${dataSourceVariableViaMethodItem(e , feature: feature)}.${e.methodName}(params);

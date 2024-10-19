@@ -35,7 +35,10 @@ abstract class CleanArchFileGenerator with FileCreatorUtils {
   Future<void> createModelFile(String content , {required CleanArchEntityItem item}) async {}
 
 
-  Future<void> createRemoteDataSourceFile(String content) async {}
+  Future<void> createRemoteDataSourceFile(String content) async {
+
+  }
+  Future<void> createRemoteDataSourceImplFile(String content) async {}
 
   Future<void> createLocalDataSourceFile(String content) async {}
 }
