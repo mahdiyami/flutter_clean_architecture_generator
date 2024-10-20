@@ -2,14 +2,14 @@ import 'package:code_builder/code_builder.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
 class EntityCreator extends BaseEntityCreator {
-  EntityCreator({required super.feature});
+
 
   @override
   Class createClass(CleanArchEntityItem item) {
     return Class((b) => b
       ..name = item.toString()
       ..abstract = true
-      ..extend = refer(baseEntityName)
+      ..extend = refer(baseEntityName(item))
       ..methods.addAll(_entityParams(item: item)));;
   }
 

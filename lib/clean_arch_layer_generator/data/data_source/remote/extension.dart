@@ -6,6 +6,6 @@ extension ConvertRemoteDataSourceCreatorToCode on BaseRemoteDataSourceCreator {
   String _toCode() => createClass().convertClassToCode();
 
   void remoteDataSourceToCodeAllAndGenerateFiles() {
-    CleanArchFileGenerator.createData(feature).createRemoteDataSourceFile(_toCode());
+    CleanArchDataFileGenerator(feature).createRemoteDataSourceFile(_toCode());
   }
 }

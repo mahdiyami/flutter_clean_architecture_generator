@@ -4,6 +4,6 @@ extension ConvertRepositoryCreatorToCode on BaseRepositoryCreator {
   String _toCode() => createClass().convertClassToCode();
 
   void repoToCodeAllAndGenerateFiles() {
-    CleanArchFileGenerator.createDomain(feature).createRepositoryFile(_toCode());
+    CleanArchDomainFileGenerator(feature).createRepositoryFile(_toCode());
   }
 }

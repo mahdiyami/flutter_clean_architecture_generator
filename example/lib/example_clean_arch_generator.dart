@@ -46,6 +46,7 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
         params: bool,
         methodName: 'addToCart',
         response: BaseResponseNames.baseResponse,
+        isLocalData: true,
         apiServiceSettings: ApiServiceSettings(
           endPoint: 'addToCart',
           method: CleanArchRestApiMethodType.POST,
@@ -55,6 +56,7 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
         responseEntity: userEntity,
         params: String,
         methodName: 'removeFromCart',
+        isLocalData: true,
         response: BaseResponseNames.baseResponse,
         apiServiceSettings: ApiServiceSettings(
           endPoint: 'removeFromCart',

@@ -5,6 +5,6 @@ extension ConvertRepositoryImplCreatorToCode on BaseRepositoryImplCreator {
   String _toCode() => createClass().convertClassToCode();
 
   void repoImplToCodeAllAndGenerateFiles() {
-    CleanArchFileGenerator.createData(feature).createRepositoryImplFile(_toCode());
+    CleanArchDataFileGenerator(feature).createRepositoryImplFile(_toCode());
   }
 }

@@ -2,27 +2,46 @@ import 'package:flutter_clean_arch_generator/clean_arch_generator_config.dart';
 import 'package:flutter_clean_arch_generator/extension/string.dart';
 import 'package:flutter_clean_arch_generator/utils/method_item.dart';
 
-mixin class CleanArchClassGenUtils {
-  String eitherResponse(MethodItem item) {
-    String future = item.isFuture ? 'FutureOr<Either<Failure, ${item.responseName}<${item.baseResponseType}>>>' : '';
-    if(item.response == BaseResponseNames.noResponse) {
-      return 'FutureOr<Either<Failure, NoResponse>>';
+mixin CleanArchClassGenUtils {
+  String eitherResponse(MethodItem item , { bool isFutureOr = false}) {
+    String res = "Either<Failure, ${item.responseName}<${item.baseResponseType}>>";
+    if(item.isFuture || isFutureOr){
+      String future = isFutureOr ? 'FutureOr' : 'Future';
+      if(item.response == BaseResponseNames.noResponse) {
+        return '${future}<Either<Failure, NoResponse>>';
+      }
+      else {
+        return '${future}<${res}>';
+      }
+    }else{
+      if(item.response == BaseResponseNames.noResponse) {
+        return 'Either<Failure, NoResponse>';
+      }
+      else {
+        return res;
+      }
     }
-    else {
-      return 'FutureOr<>';
-    }
+
    }
   String response(MethodItem item , { bool isModel = false}) {
-    if(item.response == BaseResponseNames.noResponse) {
-      return item.responseName;
-    }
-    else {
-      return '${item.responseName}<${isModel ? item.baseResponseTypeModel: item.baseResponseType}>';
+    String res = '${item.responseName}<${isModel ? item.baseResponseTypeModel: item.baseResponseType}>';
+    if(item.isFuture){
+      if(item.response == BaseResponseNames.noResponse) {
+        return "Future<${item.responseName}>";
+      }
+      else {
+        return 'Future<$res>';
+      }
+    }else{
+      if(item.response == BaseResponseNames.noResponse) {
+        return item.responseName;
+      }
+      else {
+        return res;
+      }
     }
   }
-  String futureResponse(String responseName) {
-    return 'FutureOr<$responseName>';
-  }
+
   String remoteDatasourceName(CleanArchFeature feature) {
     return '${feature.featureName.firstLetterUpperCase}RemoteDataSource';
   }

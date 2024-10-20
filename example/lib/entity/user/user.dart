@@ -1,7 +1,9 @@
 import 'package:example/entity/address/address.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
-final CleanArchEntityItem userEntity = CleanArchEntityItem(entityName: 'User', entityParams: [
+final CleanArchEntityItem userEntity = CleanArchEntityItem(
+    entityName: 'User',
+    entityParams: [
   EntityParams(objectType: String, objectNameKey: 'id'),
   EntityParams(objectType: String, objectNameKey: 'name'),
   EntityParams(objectType: String, objectNameKey: 'password'),

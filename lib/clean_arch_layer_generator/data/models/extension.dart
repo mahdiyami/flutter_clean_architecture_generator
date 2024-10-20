@@ -7,7 +7,7 @@ extension ConvertModelCreatorToCode on BaseModelCreator {
     String code = '';
     for (CleanArchEntityItem item in feature.entities) {
       code = _toCode(item);
-      CleanArchFileGenerator.createData(feature).createModelFile(code , item: item);
+      CleanArchDataFileGenerator(feature).createModelFile(code , item: item);
 
     }
   }

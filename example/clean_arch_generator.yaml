@@ -1,8 +1,8 @@
 clean_arch_generator:
   features_directory: lib/features
-  entities:
+  shared_entity:
     - generate: false
-    - directory: lib/entities
+    - directory: lib/shared
   features:
     - generate: true
 

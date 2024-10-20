@@ -9,7 +9,7 @@ extension ConvertUseCaseCreatorToCode on BaseUseCaseCreator {
     String code = '';
     for (MethodItem item in feature.methodItems) {
       code = _toCode(item);
-      CleanArchFileGenerator.createDomain(feature).createUseCaseFile(code , methodItem: item);
+      CleanArchDomainFileGenerator(feature).createUseCaseFile(code , methodItem: item);
 
     }
   }

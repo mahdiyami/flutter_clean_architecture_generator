@@ -18,7 +18,7 @@ class RepositoryCreator extends BaseRepositoryCreator {
       String params = e.paramsName;
       return Method((b) => b
         ..name = e.methodName
-        ..returns = refer(eitherResponse(e))
+        ..returns = refer(eitherResponse(e , isFutureOr: true))
         ..requiredParameters.add(Parameter((b) => b
           ..name = 'params'
           ..type = refer(params))));
