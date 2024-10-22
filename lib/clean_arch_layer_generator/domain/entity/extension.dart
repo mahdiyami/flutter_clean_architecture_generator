@@ -15,7 +15,7 @@ extension ConvertEntityCreatorToCode on BaseEntityCreator {
     String code = '';
     for (CleanArchEntityItem item in shared) {
       code = _toCode(item);
-      CleanArchSharedEntityFileGenerator().createSharedEntityFile(code, item: item);
+      CleanArchSharedFileGenerator().createSharedEntityFile(code, item: item);
     }
   }
 }

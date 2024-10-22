@@ -5,7 +5,7 @@ abstract class BaseEntityCreator with CleanArchClassGenUtils{
 
   Class createClass(CleanArchEntityItem item);
 
-  String baseEntityName(CleanArchEntityItem item) => item.isParams ? "BaseParams": 'BaseEntity';
+  String baseEntityName(CleanArchEntityItem item) => "BaseEntity";
 
  }
 

@@ -12,6 +12,12 @@ abstract class BaseModelCreator with CleanArchClassGenUtils{
   String get modelAnnotation => "baseModelFreezed";
   
   String modelFromJsonMethodName(CleanArchEntityItem item) => '_\$${modelName(item.entityName)}ImplFromJson';
+  String modelConstructorFreezedMixinName(String entityName) {
+    return '_${entityName.firstLetterUpperCase}Model';
+  }
 
+  String modelFreezedMixinName(String entityName) {
+    return '_\$${entityName.firstLetterUpperCase}Model';
+  }
  }
 

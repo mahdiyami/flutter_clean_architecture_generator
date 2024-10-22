@@ -10,7 +10,7 @@ class CleanArchGenerator {
 
 
   void generate(){
-    SharedCreator(shared: config.sharedEntities).createShared();
+    SharedCreator(sharedEntities: config.sharedEntities , sharedParams: config.sharedParams).createShared();
     FeaturesCreator(features: config.features).createFeatures();
   }
 }

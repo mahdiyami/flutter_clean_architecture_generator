@@ -1,3 +1,5 @@
+# dart pub global run index_generator
+
 index_generator:
   exclude:
     - '**.g.dart'

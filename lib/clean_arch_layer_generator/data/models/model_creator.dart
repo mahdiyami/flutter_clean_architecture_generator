@@ -23,21 +23,21 @@ class ModelCreator extends BaseModelCreator {
         ..optionalParameters.addAll(_entityParams(params: item.entityParams))
         ..redirect = refer(modelConstructorFreezedMixinName(item.entityName))
       ))
-      ..methods.add(Method((b) => b
+      ..constructors.add(Constructor((b) => b
+        ..factory = true
         ..name = 'fromJson'
-        ..static = true
-        ..returns = refer(modelName(item.entityName))
         ..requiredParameters.add(Parameter((b) => b
           ..name = 'json'
           ..type = refer('Map<String, dynamic>')))
         ..body = Code('return ${modelFromJsonMethodName(item)}(json);')
       ))
+
     );
 
 
   }
 
-  List<Parameter> _entityParams({required List<EntityParams> params}) {
+  List<Parameter> _entityParams({required List<EntityProperty> params}) {
     return params
         .map((e) => Parameter((b) => b
       ..name = e.objectNameKey

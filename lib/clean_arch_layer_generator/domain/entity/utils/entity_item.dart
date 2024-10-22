@@ -1,32 +1,27 @@
-import 'package:json_annotation/json_annotation.dart' show JsonKey;
+import 'package:flutter_clean_arch_generator/base/base_property.dart';
 
 class CleanArchEntityItem {
-  final String entityName;
-  final bool isParams;
-  final List<EntityParams> entityParams;
+  final String  entityName;
+  final List<EntityProperty>  entityParams;
 
-  CleanArchEntityItem({required this.entityName, required this.entityParams, this.isParams = false});
+  const CleanArchEntityItem({required this.entityName, required this.entityParams});
+
 
   @override
   String toString() {
-    if(isParams) {
-      return '${entityName}Params';
-    }
     return '${entityName}Entity';
   }
+
 }
 
-class EntityParams {
-  final Object objectType;
-  final String objectNameKey;
-  final JsonKey? jsonKey;
-  final bool nullable;
+class EntityProperty extends BaseProperty{
 
-  EntityParams({required this.objectType, required this.objectNameKey, this.jsonKey, this.nullable = false});
+  const EntityProperty({required Object objectType, required super.objectNameKey, super.jsonKey, super.nullable}):super(objectType);
+
 }
 
-extension OnEntityParams on EntityParams {
+extension OnEntityParams on EntityProperty {
   String get convertObjectTypeEntityToModel {
-    return objectType.toString().replaceAll('Entity', 'Model');
+    return objectTypeToString.replaceAll('Entity', 'Model');
   }
 }

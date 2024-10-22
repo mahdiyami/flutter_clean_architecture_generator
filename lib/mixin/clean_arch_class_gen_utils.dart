@@ -86,12 +86,8 @@ mixin CleanArchClassGenUtils {
     }
     return '${entityName.firstLetterUpperCase}Model';
   }
-  String modelFreezedMixinName(String entityName) {
-    return '_\$${entityName.firstLetterUpperCase}Model';
-  }
-  String modelConstructorFreezedMixinName(String entityName) {
-    return '_${entityName.firstLetterUpperCase}Model';
-  }
+
+
 
   String useCaseName(String methodName) {
     return '${methodName.firstLetterUpperCase}UseCase';

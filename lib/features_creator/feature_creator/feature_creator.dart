@@ -4,6 +4,8 @@ import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/dat
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/data_source/remote/remote_impl/remote_data_source_impl_creator.dart';
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/repository_impl/extension.dart';
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/repository_impl/repository_impl_creator.dart';
+import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/domain/params/extension.dart';
+import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/domain/params/params_creator.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
 class FeatureCreator extends BaseFeatureCreator with CleanArchClassGenUtils {
@@ -14,6 +16,7 @@ class FeatureCreator extends BaseFeatureCreator with CleanArchClassGenUtils {
     RepositoryCreator(feature: feature).repoToCodeAllAndGenerateFiles();
     EntityCreator().entityToCodeAllAndGenerateFiles(feature);
     UseCaseCreator(feature: feature).useCaseToCodeAllAndGenerateFiles();
+    ParamsCreator().paramsToCodeAllAndGenerateFiles(feature);
 
     RemoteDataSourceCreator(feature: feature).remoteDataSourceToCodeAllAndGenerateFiles();
     RemoteDataSourceImplCreator(feature: feature).remoteDataSourceImplToCodeAllAndGenerateFiles();
