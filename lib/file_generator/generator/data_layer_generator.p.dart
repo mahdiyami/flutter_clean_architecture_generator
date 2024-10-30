@@ -29,6 +29,9 @@ class CleanArchDataFileGenerator extends CleanArchFileGenerator {
 
   Future<void> createLocalDataSourceFile(String content) async {
     createFile('$_localDataSourceDirectory/${feature.featureName}_local_data_source.dart', content: content);
+  }
+
+  Future<void> createLocalDataSourceImplFile(String content) async {
     createFile('$_localDataSourceDirectory/${feature.featureName}_local_data_source_impl.dart', content: content);
   }
 }

@@ -19,10 +19,17 @@ abstract class CleanArchFeature {
   List<MethodItem> get methodItems;
 
   bool get hasLocalDataSource {
-    return methodItems.any((element) => element.isLocalData || element.isCachedResponse);
+    return methodItems.any((element) => element.serviceSettings is LocalDataServiceSettings || element.isCachedResponse);
   }
 
   bool get hasRemoteDataSource {
-    return !methodItems.every((element) => element.isLocalData);
+    return !methodItems.every((element) => element.serviceSettings is LocalDataServiceSettings);
   }
+
+  CleanArchFeature copyWith({
+    String? featureName,
+    List<CleanArchEntityItem>? entities,
+    List<CleanArchParamsItem>? params,
+    List<MethodItem>? methodItems
+  });
 }

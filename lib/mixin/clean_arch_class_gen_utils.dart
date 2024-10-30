@@ -3,40 +3,36 @@ import 'package:flutter_clean_arch_generator/extension/string.dart';
 import 'package:flutter_clean_arch_generator/utils/method_item.dart';
 
 mixin CleanArchClassGenUtils {
-  String eitherResponse(MethodItem item , { bool isFutureOr = false}) {
+  String eitherResponse(MethodItem item, {bool isFutureOr = false}) {
     String res = "Either<Failure, ${item.responseName}<${item.baseResponseType}>>";
-    if(item.isFuture || isFutureOr){
+    if (item.isFuture || isFutureOr) {
       String future = isFutureOr ? 'FutureOr' : 'Future';
-      if(item.response == BaseResponseNames.noResponse) {
+      if (item.response == BaseResponseNames.noResponse) {
         return '${future}<Either<Failure, NoResponse>>';
-      }
-      else {
+      } else {
         return '${future}<${res}>';
       }
-    }else{
-      if(item.response == BaseResponseNames.noResponse) {
+    } else {
+      if (item.response == BaseResponseNames.noResponse) {
         return 'Either<Failure, NoResponse>';
-      }
-      else {
+      } else {
         return res;
       }
     }
+  }
 
-   }
-  String response(MethodItem item , { bool isModel = false}) {
-    String res = '${item.responseName}<${isModel ? item.baseResponseTypeModel: item.baseResponseType}>';
-    if(item.isFuture){
-      if(item.response == BaseResponseNames.noResponse) {
+  String response(MethodItem item, {bool isModel = false}) {
+    String res = '${item.responseName}<${isModel ? item.baseResponseTypeModel : item.baseResponseType}>';
+    if (item.isFuture) {
+      if (item.response == BaseResponseNames.noResponse) {
         return "Future<${item.responseName}>";
-      }
-      else {
+      } else {
         return 'Future<$res>';
       }
-    }else{
-      if(item.response == BaseResponseNames.noResponse) {
+    } else {
+      if (item.response == BaseResponseNames.noResponse) {
         return item.responseName;
-      }
-      else {
+      } else {
         return res;
       }
     }
@@ -45,6 +41,7 @@ mixin CleanArchClassGenUtils {
   String remoteDatasourceName(CleanArchFeature feature) {
     return '${feature.featureName.firstLetterUpperCase}RemoteDataSource';
   }
+
   String remoteDatasourceVariableName(CleanArchFeature feature) {
     return '${feature.featureName.firstLetterLowerCase}RemoteDataSource';
   }
@@ -52,26 +49,31 @@ mixin CleanArchClassGenUtils {
   String localDatasourceName(CleanArchFeature feature) {
     return '${feature.featureName.firstLetterUpperCase}LocalDataSource';
   }
+
   String localDatasourceVariableName(CleanArchFeature feature) {
     return '${feature.featureName.firstLetterLowerCase}LocalDataSource';
   }
-  String dataSourceViaMethodItem(MethodItem methodItem , {required CleanArchFeature feature}) {
-    if(methodItem.isLocalData) {
+
+  String dataSourceViaMethodItem(MethodItem methodItem, {required CleanArchFeature feature}) {
+    if (methodItem.serviceSettings is LocalDataServiceSettings) {
       return localDatasourceName(feature);
-    }else{
+    } else {
       return remoteDatasourceName(feature);
     }
   }
-  String dataSourceVariableViaMethodItem(MethodItem methodItem , {required CleanArchFeature feature}) {
-    if(methodItem.isLocalData) {
+
+  String dataSourceVariableViaMethodItem(MethodItem methodItem, {required CleanArchFeature feature}) {
+    if (methodItem.serviceSettings is LocalDataServiceSettings) {
       return localDatasourceVariableName(feature);
-    }else{
+    } else {
       return remoteDatasourceVariableName(feature);
     }
-   }
+  }
+
   String repositoryName(String featureName) {
     return '${featureName.firstLetterUpperCase}Repository';
   }
+
   String repositoryImplName(String featureName) {
     return '${featureName.firstLetterUpperCase}RepositoryImpl';
   }
@@ -81,13 +83,11 @@ mixin CleanArchClassGenUtils {
   }
 
   String modelName(String entityName) {
-    if(entityName.contains("Entity")) {
+    if (entityName.contains("Entity")) {
       return entityName.replaceAll('Entity', 'Model');
     }
     return '${entityName.firstLetterUpperCase}Model';
   }
-
-
 
   String useCaseName(String methodName) {
     return '${methodName.firstLetterUpperCase}UseCase';

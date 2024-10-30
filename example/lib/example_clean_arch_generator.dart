@@ -2,82 +2,76 @@ import 'package:example/entity/address/address.dart';
 import 'package:example/entity/auth/check_auth.dart';
 import 'package:example/entity/user/user.dart';
 import 'package:example/params/check_auth_params.dart';
-import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/domain/params/utils/params_item.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
 class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
   @override
   List<CleanArchEntityItem> get sharedEntities => [userEntity, addressEntity];
   @override
-   List<CleanArchParamsItem> get sharedParams => [];
+  List<CleanArchParamsItem> get sharedParams => [];
   @override
   List<CleanArchFeature> get features => [
-        ExampleCleanArchFeature(featureName: "auth",
-            params: [
-              checkAuthParams
-            ],
-            entities: [
+        ExampleCleanArchFeature(featureName: "auth", params: [
+          checkAuthParams
+        ], entities: [
           checkAuthEntity,
-          userEntity,
         ], methodItems: [
-          MethodItem(
+          MethodItem<RemoteDataSettings>(
             responseEntity: checkAuthEntity,
             params: String,
             methodName: 'checkAuth',
-            isLocalData: true,
             isFuture: false,
             response: BaseResponseNames.baseResponse,
-            apiServiceSettings: ApiServiceSettings(
+            serviceSettings: RemoteDataSettings(
               endPoint: 'checkAuth',
               method: CleanArchRestApiMethodType.GET,
             ),
           ),
-          MethodItem(
+          MethodItem<LocalDataServiceSettings>(
+            responseEntity: checkAuthEntity,
+            params: String,
+            methodName: 'token',
+             isFuture: false,
+            response: BaseResponseNames.baseResponse,
+            serviceSettings: LocalDataServiceSettings(),
+          ),
+          MethodItem<RemoteDataSettings>(
             responseEntity: userEntity,
             params: String,
             methodName: 'confirmAuth',
-            apiServiceSettings: ApiServiceSettings(
+            serviceSettings: RemoteDataSettings(
               endPoint: 'confirmAuth',
               method: CleanArchRestApiMethodType.POST,
             ),
             response: BaseResponseNames.noResponse,
           ),
         ]),
-
-    ExampleCleanArchFeature(featureName: "cart",
-        params: [
-
-        ],
-        entities: [
-      checkAuthEntity,
-      userEntity,
-    ], methodItems: [
-      MethodItem(
-        responseEntity: checkAuthEntity,
-        params: bool,
-        methodName: 'addToCart',
-        response: BaseResponseNames.baseResponse,
-        isLocalData: true,
-        apiServiceSettings: ApiServiceSettings(
-          endPoint: 'addToCart',
-          method: CleanArchRestApiMethodType.POST,
-        ),
-      ),
-      MethodItem(
-        responseEntity: userEntity,
-        params: String,
-        methodName: 'removeFromCart',
-        isLocalData: true,
-        response: BaseResponseNames.baseResponse,
-        apiServiceSettings: ApiServiceSettings(
-          endPoint: 'removeFromCart',
-          method: CleanArchRestApiMethodType.POST,
-        ),
-      ),
-    ]),
+        ExampleCleanArchFeature(featureName: "cart", params: [], entities: [
+          checkAuthEntity,
+          userEntity,
+        ], methodItems: [
+          MethodItem(
+            responseEntity: checkAuthEntity,
+            params: bool,
+            methodName: 'addToCart',
+            response: BaseResponseNames.baseResponse,
+            serviceSettings: RemoteDataSettings(
+              endPoint: 'addToCart',
+              method: CleanArchRestApiMethodType.POST,
+            ),
+          ),
+          MethodItem(
+            responseEntity: userEntity,
+            params: String,
+            methodName: 'removeFromCart',
+            response: BaseResponseNames.baseResponse,
+            serviceSettings: RemoteDataSettings(
+              endPoint: 'removeFromCart',
+              method: CleanArchRestApiMethodType.POST,
+            ),
+          ),
+        ]),
       ];
-
-
 }
 
 class ExampleCleanArchFeature extends CleanArchFeature {
@@ -98,5 +92,18 @@ class ExampleCleanArchFeature extends CleanArchFeature {
     required this.params,
   });
 
-
+  @override
+  CleanArchFeature copyWith({
+    String? featureName,
+    List<CleanArchEntityItem>? entities,
+    List<MethodItem>? methodItems,
+    List<CleanArchParamsItem>? params,
+  }) {
+    return ExampleCleanArchFeature(
+      featureName: featureName ?? this.featureName,
+      entities: entities ?? this.entities,
+      methodItems: methodItems ?? this.methodItems,
+      params: params ?? this.params,
+    );
+  }
 }
