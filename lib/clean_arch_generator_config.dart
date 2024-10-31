@@ -1,5 +1,6 @@
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/domain/params/utils/params_item.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
+import 'package:flutter_clean_arch_generator/utils/base_method.dart';
 
 abstract class CleanArchGeneratorConfig {
   List<CleanArchEntityItem> get sharedEntities;
@@ -16,20 +17,20 @@ abstract class CleanArchFeature {
 
   List<CleanArchParamsItem> get params;
 
-  List<MethodItem> get methodItems;
+  List<BaseMethodItem> get methodItems;
 
   bool get hasLocalDataSource {
-    return methodItems.any((element) => element.serviceSettings is LocalDataServiceSettings || element.isCachedResponse);
+    return methodItems.any((element) => element is LocalMethodItem);
   }
 
   bool get hasRemoteDataSource {
-    return !methodItems.every((element) => element.serviceSettings is LocalDataServiceSettings);
+    return !methodItems.every((element) => element is LocalMethodItem);
   }
 
   CleanArchFeature copyWith({
     String? featureName,
     List<CleanArchEntityItem>? entities,
     List<CleanArchParamsItem>? params,
-    List<MethodItem>? methodItems
+    List<BaseMethodItem>? methodItems
   });
 }

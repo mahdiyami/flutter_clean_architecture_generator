@@ -3,6 +3,7 @@ import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/dat
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/data_source/local/local_impl/extension.dart';
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/data_source/local/local_impl/local_data_source_impl_creator.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
+import 'package:flutter_clean_arch_generator/utils/base_method.dart';
 
 class FeatureCreator extends BaseFeatureCreator with CleanArchClassGenUtils {
   FeatureCreator({required super.feature});
@@ -22,8 +23,7 @@ class FeatureCreator extends BaseFeatureCreator with CleanArchClassGenUtils {
 
   void _localDataSources(CleanArchFeature feature) {
     final CleanArchFeature filteredFeature = feature.copyWith(
-        methodItems: feature.methodItems.where((element) => element.serviceSettings is LocalDataServiceSettings).toList()
-            as List<MethodItem<LocalDataServiceSettings>>);
+        methodItems: feature.methodItems.where((element) => element is LocalMethodItem).toList());
     LocalDataSourceCreator(feature: filteredFeature).localDataSourceToCodeAllAndGenerateFiles();
     LocalDataSourceImplCreator(feature: filteredFeature).localDataSourceImplToCodeAllAndGenerateFiles();
   }
@@ -31,7 +31,7 @@ class FeatureCreator extends BaseFeatureCreator with CleanArchClassGenUtils {
   void _remoteDataSources(CleanArchFeature feature) {
     final CleanArchFeature filteredFeature = feature.copyWith(
         methodItems:
-            feature.methodItems.where((element) => element.serviceSettings is RemoteDataSettings).toList() as List<MethodItem<RemoteDataSettings>>);
+            feature.methodItems.where((element) => element is LocalMethodItem).toList());
     RemoteDataSourceCreator(feature: filteredFeature).remoteDataSourceToCodeAllAndGenerateFiles();
     RemoteDataSourceImplCreator(feature: filteredFeature).remoteDataSourceImplToCodeAllAndGenerateFiles();
   }

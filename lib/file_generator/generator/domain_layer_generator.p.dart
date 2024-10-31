@@ -17,7 +17,7 @@ class CleanArchDomainFileGenerator extends CleanArchFileGenerator {
     await createFile('$_repositoryDirectory/${feature.featureName.firstLetterLowerCase}_repository.dart', content: content);
   }
 
-  Future<void> createUseCaseFile(String content, {required MethodItem methodItem}) async {
+  Future<void> createUseCaseFile(String content, {required BaseMethodItem methodItem}) async {
     await createFile('$_useCaseDirectory/${methodItem.methodName.firstLetterLowerCase}_use_case.dart', content: content);
   }
 

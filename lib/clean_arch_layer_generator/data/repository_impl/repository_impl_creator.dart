@@ -52,7 +52,7 @@ class RepositoryImplCreator extends BaseRepositoryImplCreator {
         ..returns = refer(eitherResponse(e))
         ..body = Code('''
         return ${performName(e)} {
-          return ${dataSourceVariableViaMethodItem(e , feature: feature)}.${e.methodName}(params);
+          return ${dataSourceVariableViaBaseMethodItem(e , feature: feature)}.${e.methodName}(params);
         });
       ''')
         ..requiredParameters.add(Parameter((b) => b

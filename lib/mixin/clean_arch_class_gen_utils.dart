@@ -1,9 +1,9 @@
 import 'package:flutter_clean_arch_generator/clean_arch_generator_config.dart';
 import 'package:flutter_clean_arch_generator/extension/string.dart';
-import 'package:flutter_clean_arch_generator/utils/method_item.dart';
+import 'package:flutter_clean_arch_generator/utils/base_method.dart';
 
 mixin CleanArchClassGenUtils {
-  String eitherResponse(MethodItem item, {bool isFutureOr = false}) {
+  String eitherResponse(BaseMethodItem item, {bool isFutureOr = false}) {
     String res = "Either<Failure, ${item.responseName}<${item.baseResponseType}>>";
     if (item.isFuture || isFutureOr) {
       String future = isFutureOr ? 'FutureOr' : 'Future';
@@ -21,7 +21,7 @@ mixin CleanArchClassGenUtils {
     }
   }
 
-  String response(MethodItem item, {bool isModel = false}) {
+  String response(BaseMethodItem item, {bool isModel = false}) {
     String res = '${item.responseName}<${isModel ? item.baseResponseTypeModel : item.baseResponseType}>';
     if (item.isFuture) {
       if (item.response == BaseResponseNames.noResponse) {
@@ -54,16 +54,16 @@ mixin CleanArchClassGenUtils {
     return '${feature.featureName.firstLetterLowerCase}LocalDataSource';
   }
 
-  String dataSourceViaMethodItem(MethodItem methodItem, {required CleanArchFeature feature}) {
-    if (methodItem.serviceSettings is LocalDataServiceSettings) {
+  String dataSourceViaBaseMethodItem(BaseMethodItem methodItem, {required CleanArchFeature feature}) {
+    if (methodItem is LocalMethodItem) {
       return localDatasourceName(feature);
     } else {
       return remoteDatasourceName(feature);
     }
   }
 
-  String dataSourceVariableViaMethodItem(MethodItem methodItem, {required CleanArchFeature feature}) {
-    if (methodItem.serviceSettings is LocalDataServiceSettings) {
+  String dataSourceVariableViaBaseMethodItem(BaseMethodItem methodItem, {required CleanArchFeature feature}) {
+    if (methodItem is LocalMethodItem) {
       return localDatasourceVariableName(feature);
     } else {
       return remoteDatasourceVariableName(feature);

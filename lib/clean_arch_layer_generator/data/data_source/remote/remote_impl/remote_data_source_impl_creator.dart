@@ -3,6 +3,7 @@ import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/dat
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/data_source/remote/remote_impl/base_remote_data_source_impl_creator.dart';
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/repository_impl/base_repository_impl_creator.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
+import 'package:flutter_clean_arch_generator/utils/base_method.dart';
 
 class RemoteDataSourceImplCreator extends BaseRemoteDataSourceImplCreator {
   RemoteDataSourceImplCreator({required super.feature});
@@ -25,7 +26,7 @@ class RemoteDataSourceImplCreator extends BaseRemoteDataSourceImplCreator {
         ..name = e.methodName
         ..returns = refer(eitherResponse(e))
         ..lambda = true
-        ..body = Code(httpRequest(e as MethodItem<RemoteDataSettings>))
+        ..body = Code(httpRequest(e.toRemoteMethodItem))
         ..requiredParameters.add(Parameter((b) => b
           ..name = 'params'
           ..type = refer(params))));

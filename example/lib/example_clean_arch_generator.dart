@@ -16,30 +16,30 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
         ], entities: [
           checkAuthEntity,
         ], methodItems: [
-          MethodItem<RemoteDataSettings>(
+          RemoteMethodItem(
             responseEntity: checkAuthEntity,
             params: String,
             methodName: 'checkAuth',
             isFuture: false,
             response: BaseResponseNames.baseResponse,
-            serviceSettings: RemoteDataSettings(
+            settings: RemoteDataSettings(
               endPoint: 'checkAuth',
               method: CleanArchRestApiMethodType.GET,
             ),
           ),
-          MethodItem<LocalDataServiceSettings>(
+          LocalMethodItem(
             responseEntity: checkAuthEntity,
             params: String,
             methodName: 'token',
-             isFuture: false,
+            isFuture: false,
             response: BaseResponseNames.baseResponse,
-            serviceSettings: LocalDataServiceSettings(),
+            settings: LocalDataSettings(),
           ),
-          MethodItem<RemoteDataSettings>(
+          RemoteMethodItem(
             responseEntity: userEntity,
             params: String,
             methodName: 'confirmAuth',
-            serviceSettings: RemoteDataSettings(
+            settings: RemoteDataSettings(
               endPoint: 'confirmAuth',
               method: CleanArchRestApiMethodType.POST,
             ),
@@ -50,22 +50,22 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
           checkAuthEntity,
           userEntity,
         ], methodItems: [
-          MethodItem(
+          RemoteMethodItem(
             responseEntity: checkAuthEntity,
             params: bool,
             methodName: 'addToCart',
             response: BaseResponseNames.baseResponse,
-            serviceSettings: RemoteDataSettings(
+            settings: RemoteDataSettings(
               endPoint: 'addToCart',
               method: CleanArchRestApiMethodType.POST,
             ),
           ),
-          MethodItem(
+          RemoteMethodItem(
             responseEntity: userEntity,
             params: String,
             methodName: 'removeFromCart',
             response: BaseResponseNames.baseResponse,
-            serviceSettings: RemoteDataSettings(
+            settings: RemoteDataSettings(
               endPoint: 'removeFromCart',
               method: CleanArchRestApiMethodType.POST,
             ),
@@ -80,7 +80,7 @@ class ExampleCleanArchFeature extends CleanArchFeature {
   @override
   final List<CleanArchEntityItem> entities;
   @override
-  final List<MethodItem> methodItems;
+  final List<BaseMethodItem> methodItems;
 
   @override
   final List<CleanArchParamsItem> params;
@@ -96,7 +96,7 @@ class ExampleCleanArchFeature extends CleanArchFeature {
   CleanArchFeature copyWith({
     String? featureName,
     List<CleanArchEntityItem>? entities,
-    List<MethodItem>? methodItems,
+    List<BaseMethodItem>? methodItems,
     List<CleanArchParamsItem>? params,
   }) {
     return ExampleCleanArchFeature(

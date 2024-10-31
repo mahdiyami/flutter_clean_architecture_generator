@@ -1,4 +1,4 @@
-part of 'method_item.dart';
+part of 'base_service.dart';
 
 class RemoteDataSettings extends BaseService {
   final String endPoint;
