@@ -6,9 +6,14 @@ enum LocalDataMethodType { get, save, remove }
 abstract class BaseLocalDataSourceImplCreator with CleanArchClassGenUtils {
   final CleanArchFeature feature;
   const BaseLocalDataSourceImplCreator({required this.feature});
-
+  String localDataSourceImplName() {
+    return "${feature.featureName.firstLetterUpperCase}LocalDataSourceImpl";
+  }
+  String localDataSourceName() {
+    return "${feature.featureName.firstLetterUpperCase}LocalDataSource";
+  }
   String cacheKey(LocalMethodItem item) {
-    return "${item.methodName}CacheKey";
+    return "_${item.methodName}CacheKey";
   }
   String methodName(LocalDataMethodType type, LocalMethodItem item) {
     return "${type.name}${item.methodName.firstLetterUpperCase}";

@@ -20,7 +20,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_clean_arch_generator:
-    path: ../../flutter_clean_arch_generator
+    path: ../../flutter_clean_architecture_generator
 
 
 dev_dependencies:

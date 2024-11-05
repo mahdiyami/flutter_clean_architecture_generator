@@ -3,6 +3,9 @@ import 'package:flutter_clean_arch_generator/extension/string.dart';
 import 'package:flutter_clean_arch_generator/utils/base_method.dart';
 
 mixin CleanArchClassGenUtils {
+  String futureOrBasicResponse(String item) {
+   return 'FutureOr<$item>';
+  }
   String eitherResponse(BaseMethodItem item, {bool isFutureOr = false}) {
     String res = "Either<Failure, ${item.responseName}<${item.baseResponseType}>>";
     if (item.isFuture || isFutureOr) {

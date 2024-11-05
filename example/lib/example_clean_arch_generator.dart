@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:example/entity/address/address.dart';
 import 'package:example/entity/auth/check_auth.dart';
 import 'package:example/entity/user/user.dart';
@@ -18,7 +19,7 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
         ], methodItems: [
           RemoteMethodItem(
             responseEntity: checkAuthEntity,
-            params: String,
+            params: Left(checkAuthParams),
             methodName: 'checkAuth',
             isFuture: false,
             response: BaseResponseNames.baseResponse,
@@ -29,15 +30,23 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
           ),
           LocalMethodItem(
             responseEntity: checkAuthEntity,
-            params: String,
+            params: Right(bool),
             methodName: 'token',
+            isFuture: false,
+            response: BaseResponseNames.baseResponse,
+            settings: LocalDataSettings(),
+          ),
+          LocalMethodItem(
+            responseEntity: userEntity,
+            params: Left(checkAuthParams),
+            methodName: 'user',
             isFuture: false,
             response: BaseResponseNames.baseResponse,
             settings: LocalDataSettings(),
           ),
           RemoteMethodItem(
             responseEntity: userEntity,
-            params: String,
+            params: Left(checkAuthParams),
             methodName: 'confirmAuth',
             settings: RemoteDataSettings(
               endPoint: 'confirmAuth',
@@ -52,7 +61,7 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
         ], methodItems: [
           RemoteMethodItem(
             responseEntity: checkAuthEntity,
-            params: bool,
+            params: Left(checkAuthParams),
             methodName: 'addToCart',
             response: BaseResponseNames.baseResponse,
             settings: RemoteDataSettings(
@@ -62,7 +71,7 @@ class ExampleCleanArchGeneratorConfig extends CleanArchGeneratorConfig {
           ),
           RemoteMethodItem(
             responseEntity: userEntity,
-            params: String,
+            params: Left(checkAuthParams),
             methodName: 'removeFromCart',
             response: BaseResponseNames.baseResponse,
             settings: RemoteDataSettings(

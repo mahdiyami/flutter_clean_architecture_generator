@@ -31,7 +31,7 @@ class FeatureCreator extends BaseFeatureCreator with CleanArchClassGenUtils {
   void _remoteDataSources(CleanArchFeature feature) {
     final CleanArchFeature filteredFeature = feature.copyWith(
         methodItems:
-            feature.methodItems.where((element) => element is LocalMethodItem).toList());
+            feature.methodItems.where((element) => element is RemoteMethodItem).toList());
     RemoteDataSourceCreator(feature: filteredFeature).remoteDataSourceToCodeAllAndGenerateFiles();
     RemoteDataSourceImplCreator(feature: filteredFeature).remoteDataSourceImplToCodeAllAndGenerateFiles();
   }

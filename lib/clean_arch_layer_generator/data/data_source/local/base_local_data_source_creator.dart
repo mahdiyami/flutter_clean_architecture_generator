@@ -6,12 +6,8 @@ abstract class BaseLocalDataSourceCreator with CleanArchClassGenUtils {
   final CleanArchFeature feature;
   const BaseLocalDataSourceCreator({required this.feature});
 
-  String performName(LocalMethodItem item) {
-    if (item.isFuture) {
-      return "perform(() async";
-    } else {
-      return "performSync(()";
-    }
+  String methodName(LocalDataMethodType type, LocalMethodItem item) {
+    return "${type.name}${item.methodName.firstLetterUpperCase}";
   }
   Class createClass();
 }

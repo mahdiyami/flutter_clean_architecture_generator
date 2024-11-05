@@ -1,4 +1,5 @@
 // extends ApiServiceSettings or LocalDataServiceSettings
+import 'package:dartz/dartz.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
 part "local_method_item.p.dart";
@@ -6,7 +7,7 @@ part "remote_method_item.p.dart";
 
 abstract class BaseMethodItem {
   final String methodName;
-  final Type params;
+  final Either<CleanArchParamsItem , Type> params;
   final BaseResponseNames response;
   final CleanArchEntityItem responseEntity;
   final bool isFuture;
@@ -22,7 +23,7 @@ abstract class BaseMethodItem {
   String get responseName => response.currentName;
   String get baseResponseType => responseEntity.toString();
   String get baseResponseTypeModel => responseEntity.toString().replaceAll("Entity", 'Model');
-  String get paramsName => params.toString();
+  String get paramsName => params.fold((l) => l.toString(), (r) => r.toString());
 }
 
 extension BaseMethodItemToRemoteOrLocal on BaseMethodItem {
