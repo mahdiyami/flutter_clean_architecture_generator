@@ -4,18 +4,11 @@ class RemoteDataSettings extends BaseService {
   final String endPoint;
   final String? baseUrl;
   final CleanArchRestApiMethodType method;
-  final Map<String, dynamic>? queryParameters;
-  final Map<String, dynamic>? headers;
-  final Map<String, dynamic>? body;
+  final bool queryParameters;
+  final bool body;
 
-  const RemoteDataSettings({
-    required this.endPoint,
-    this.baseUrl,
-    required this.method,
-    this.queryParameters,
-    this.headers,
-    this.body,
-  });
+  const RemoteDataSettings({required this.endPoint, this.baseUrl, required this.method, this.queryParameters = false, this.body = false,})
+      : assert(queryParameters == false || body == false);
 }
 
 enum CleanArchRestApiMethodType {

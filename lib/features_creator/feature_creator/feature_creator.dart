@@ -18,7 +18,7 @@ class FeatureCreator extends BaseFeatureCreator with CleanArchClassGenUtils {
     _remoteDataSources(feature);
     _localDataSources(feature);
     RepositoryImplCreator(feature: feature).repoImplToCodeAllAndGenerateFiles();
-    ModelCreator(feature: feature).modelToCodeAllAndGenerateFiles();
+    ModelCreator().modelToCodeAllAndGenerateFiles(feature);
   }
 
   void _localDataSources(CleanArchFeature feature) {

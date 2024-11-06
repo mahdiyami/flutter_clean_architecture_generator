@@ -6,10 +6,11 @@ String get _baseExport => CleanArchYamlConfig.loadCleanArchYamlConfig().baseExpo
 extension CleanArchConvertClassToCode on Class {
 
 
-  String convertClassToCode() {
+  String convertClassToCode({List<String> partDirective = const []}) {
      final library = Library((b) {
       b.directives.addAll([
         Directive.import(_baseExport),
+        ...partDirective.map((e) => Directive.part(e)),
        ]);
       b.body.addAll([
           this,
@@ -20,6 +21,7 @@ extension CleanArchConvertClassToCode on Class {
     ).format('${library.accept(emitter)}');
   }
 }
+
 extension CleanArchConvertClassesToCode on List<Class> {
   String convertClassesToCode() {
     final library = Library((b) {

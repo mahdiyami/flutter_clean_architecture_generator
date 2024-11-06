@@ -11,12 +11,15 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
     String? endPoint = item.settings.endPoint;
     String baseResponse = item.responseName;
     String model = modelName(item.baseResponseType);
+    String queryParameters = item.settings.queryParameters ? ", queryParam: params.toJson()" : "";
+    String bodyParameters = item.settings.body ? ", data: params.toJson()" : "";
 
     String fromJson = item.response == BaseResponseNames.noResponse
         ? "${baseResponse}.fromJson(json as Map<String, dynamic>)"
-        : "${baseResponse}.fromJson(json as Map<String, dynamic>, (json) => ${model}.fromJson(json as Map<String, dynamic>))";
-    return 'appRequest.${method}("/${endPoint}" , fromJson: (json) => ${fromJson},)';
+        : "${baseResponse}.fromJson(json as Map<String, dynamic>, (json) => ${model}.fromJson(json as Map<String, dynamic>)";
+    return 'appRequest.${method}("/${endPoint}" , fromJson: (json) => ${fromJson})${queryParameters}${bodyParameters})';
   }
+
 
   Class createClass();
 }

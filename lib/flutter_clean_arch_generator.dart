@@ -2,6 +2,8 @@
 
 library flutter_clean_arch_generator;
 
+export 'package:dartz/dartz.dart';
+
 export 'base/base_property.dart';
 export 'clean_arch_generator.dart';
 export 'clean_arch_generator_config.dart';

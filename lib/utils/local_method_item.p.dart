@@ -8,7 +8,7 @@ class LocalMethodItem extends BaseMethodItem {
     required super.params,
     required super.response,
     required super.responseEntity,
-    required super.isFuture,
+      super.isFuture,
     required this.settings,
   });
 }

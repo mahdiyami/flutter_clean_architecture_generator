@@ -91,6 +91,12 @@ mixin CleanArchClassGenUtils {
     }
     return '${entityName.firstLetterUpperCase}Model';
   }
+  String fileModelName(String entityName) {
+    if (entityName.contains("Entity")) {
+      return "${entityName.firstLetterLowerCase}_model";
+    }
+    return '${entityName.firstLetterLowerCase}_model';
+  }
 
   String useCaseName(String methodName) {
     return '${methodName.firstLetterUpperCase}UseCase';

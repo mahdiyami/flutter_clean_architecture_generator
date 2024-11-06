@@ -9,7 +9,7 @@ abstract class BaseMethodItem {
   final String methodName;
   final Either<CleanArchParamsItem , Type> params;
   final BaseResponseNames response;
-  final CleanArchEntityItem responseEntity;
+  final Either<CleanArchEntityItem , Type> responseEntity;
   final bool isFuture;
 
   BaseMethodItem({
@@ -21,8 +21,8 @@ abstract class BaseMethodItem {
   });
 
   String get responseName => response.currentName;
-  String get baseResponseType => responseEntity.toString();
-  String get baseResponseTypeModel => responseEntity.toString().replaceAll("Entity", 'Model');
+  String get baseResponseType => responseEntity.fold((l) => l.toString(), (r) => r.toString());
+  String get baseResponseTypeModel => responseEntity.fold((l) => l.toString().replaceAll("Entity", 'Model'), (r) => r.toString());
   String get paramsName => params.fold((l) => l.toString(), (r) => r.toString());
 }
 

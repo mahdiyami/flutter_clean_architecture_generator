@@ -8,6 +8,10 @@ class CleanArchSharedFileGenerator extends CleanArchFileGenerator {
     await createFile('$_currentSharedEntityPath/${item.entityName.firstLetterLowerCase}_entity.dart', content: content);
 
   }
+  Future<void> createSharedModelFile(String content, {required CleanArchEntityItem item}) async {
+    await createFile('$_currentSharedEntityPath/${item.entityName.firstLetterLowerCase}_model.dart', content: content);
+
+  }
   Future<void> createSharedParamsFile(String content, {required CleanArchParamsItem item}) async {
     await createFile('$_currentSharedEntityParamsPath/${item.paramsName.firstLetterLowerCase}_params.dart', content: content);
 
