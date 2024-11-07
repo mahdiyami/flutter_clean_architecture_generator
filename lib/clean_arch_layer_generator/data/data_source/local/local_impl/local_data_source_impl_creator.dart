@@ -12,11 +12,7 @@ class LocalDataSourceImplCreator extends BaseLocalDataSourceImplCreator {
       c.name = localDataSourceImplName();
       c.annotations.add(CodeExpression(Code('LazySingleton(as: ${localDataSourceName()})')));
       c.extend = refer(localDataSourceName());
-      c.constructors.add(Constructor((c) {
-        c.constant = true;
-      }));
-      // Add constant field
-      items.forEach((item) {
+       items.forEach((item) {
         c.fields.add(_field(item));
       });
       items.forEach((item) {

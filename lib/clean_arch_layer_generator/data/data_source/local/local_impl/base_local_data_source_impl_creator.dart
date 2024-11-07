@@ -15,9 +15,7 @@ abstract class BaseLocalDataSourceImplCreator with CleanArchClassGenUtils {
   String cacheKey(LocalMethodItem item) {
     return "_${item.methodName}CacheKey";
   }
-  String methodName(LocalDataMethodType type, LocalMethodItem item) {
-    return "${type.name}${item.methodName.firstLetterUpperCase}";
-  }
+
 
   Class createClass( );
 }

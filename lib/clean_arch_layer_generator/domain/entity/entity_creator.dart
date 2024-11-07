@@ -8,8 +8,10 @@ class EntityCreator extends BaseEntityCreator {
       ..name = item.toString()
       ..abstract = true
       ..extend = refer(baseEntityName(item))
+      ..constructors.add(Constructor((b) => b
+        ..constant = true))
       ..methods.addAll(_entityParams(item: item)));
-    ;
+
   }
 
   List<Method> _entityParams({required CleanArchEntityItem item}) {

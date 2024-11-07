@@ -15,7 +15,8 @@ class LocalDataSourceCreator extends BaseLocalDataSourceCreator {
     return Class(
       (c) {
          c.abstract = true;
-        c.name = remoteDatasourceName(feature);
+        c.name = localDatasourceName(feature);
+        c.extend = refer(baseLocalDatasourceName(feature));
          items.forEach((item) {
            c.methods.addAll(_methods(item));
          });

@@ -1,7 +1,7 @@
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
 extension ParamsParamsCreatorToCode on BaseParamsCreator {
-  String _toCode(CleanArchParamsItem item) => createClass(item).convertClassToCode();
+  String _toCode(CleanArchParamsItem item) => createClass(item).convertClassToCode(partDirective: partDirective(item));
 
   void paramsToCodeAllAndGenerateFiles(CleanArchFeature feature) {
     String code = '';

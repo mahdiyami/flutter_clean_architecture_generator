@@ -14,7 +14,7 @@ class RemoteDataSourceImplCreator extends BaseRemoteDataSourceImplCreator {
       ..annotations.add(refer('LazySingleton').call([
         CodeExpression(Code('as: ${remoteDatasourceName(feature)}'))
       ]))
-      ..name = repositoryImplName(feature.featureName)
+      ..name = remoteDatasourceImplName(feature)
       ..extend = refer(remoteDatasourceName(feature))
        ..methods.addAll(_methodItems()));
   }

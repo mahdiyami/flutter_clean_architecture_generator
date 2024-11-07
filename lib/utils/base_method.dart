@@ -17,13 +17,29 @@ abstract class BaseMethodItem {
     required this.params,
     required this.response,
     required this.responseEntity,
-    this.isFuture = false,
+    this.isFuture = true,
   });
 
-  String get responseName => response.currentName;
+  String get responseName {
+    if(response == BaseResponseNames.noResponse){
+      return "${responseEntity.fold((l) => l.toString(), (r) => r.toString(),)}";
+    }
+   return "${response.currentName}<${responseEntity.fold((l) => l.toString(), (r) => r.toString(),)}>";
+  }
+  String get responseNameModel {
+    if(response == BaseResponseNames.noResponse){
+      return "${responseEntity.fold((l) => l.toString().replaceAll("Entity", 'Model'), (r) => r.toString(),)}";
+    }
+    return "${response.currentName}<${responseEntity.fold((l) => l.toString(), (r) => r.toString(),)}>";
+  }
   String get baseResponseType => responseEntity.fold((l) => l.toString(), (r) => r.toString());
   String get baseResponseTypeModel => responseEntity.fold((l) => l.toString().replaceAll("Entity", 'Model'), (r) => r.toString());
-  String get paramsName => params.fold((l) => l.toString(), (r) => r.toString());
+  String get paramsName => params.fold((l) => l.toString(), (r) {
+    if(r == Null){
+      return "NoParams";
+    }
+    return r.toString();
+  });
 }
 
 extension BaseMethodItemToRemoteOrLocal on BaseMethodItem {

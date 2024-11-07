@@ -12,7 +12,7 @@ class UseCaseCreator extends BaseUseCaseCreator {
         String name = useCaseName(item.methodName);
         String repoName = repositoryName(feature.featureName);
         String params = useCaseParams(item);
-        String response = "${useCaseResponseName(item)}<${useCaseResponseType(item)}>";
+        String response = item.responseName;
         String methodName = item.methodName;
         b
           ..annotations.add(refer('LazySingleton').call([]))

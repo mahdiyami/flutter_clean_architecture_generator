@@ -6,46 +6,44 @@ class ParamsCreator extends BaseParamsCreator {
 
   @override
   Class createClass(CleanArchParamsItem item) {
-
     return Class((b) => b
-      ..annotations.add(refer(modelAnnotation).call([]))
+      ..annotations.add(refer(modelAnnotation))
       ..name = paramsName(item.paramsName)
       ..extend = refer(baseParamsName(item))
       ..mixins.add(refer(paramsFreezedMixinName(item.paramsName)))
       ..constructors.add(Constructor((b) => b
         ..constant = true
         ..name = '_'
-        ..initializers.add(Code('super()'))
-      ))
+        ..initializers.add(Code('super()'))))
       ..constructors.add(Constructor((b) => b
         ..factory = true
+        ..constant = true
         ..optionalParameters.addAll(_entityParams(params: item.paramsProperty))
-        ..redirect = refer(paramsConstructorFreezedMixinName(item.paramsName))
-      ))
+        ..redirect = refer(paramsConstructorFreezedMixinName(item.paramsName))))
       ..constructors.add(Constructor((b) => b
         ..factory = true
         ..name = 'fromJson'
         ..requiredParameters.add(Parameter((b) => b
           ..name = 'json'
           ..type = refer('Map<String, dynamic>')))
-        ..body = Code('return ${paramsFromJsonMethodName(item)}(json);')
-      ))
-    );
-
-
+        ..body = Code('return ${paramsFromJsonMethodName(item)}(json);'))));
   }
 
   List<Parameter> _entityParams({required List<ParamsProperty> params}) {
     return params
-        .map((e) => Parameter((b) => b
-      ..name = e.objectNameKey
-      ..named = true
-       ..type = refer(e.objectTypeToString)
-        ..required = !e.nullable
-    ),
-    )
+        .map(
+          (e) => Parameter((b) {
+            if (e.jsonKey != null) {
+              b.annotations.add(jsonKeyToCode(e.jsonKey!));
+            }
+
+            b
+              ..name = e.objectNameKey
+              ..named = true
+              ..type = refer(e.objectTypeToString)
+              ..required = !e.nullable;
+          }),
+        )
         .toList();
   }
 }
-
-
