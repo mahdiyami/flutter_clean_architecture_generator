@@ -46,18 +46,22 @@ class RepositoryImplCreator extends BaseRepositoryImplCreator {
 
   List<Method> _methodItems() {
     return feature.methodItems.map((e) {
-      String params = e.paramsName;
-      return Method((b) => b
-        ..name = e.methodName
-        ..returns = refer(eitherResponse(e))
-        ..body = Code('''
+      String paramsArgsName = e.isNoParams ?  "":'params';
+
+       return Method((b) {
+         b.name = e.methodName;
+         b.annotations.add(refer('override'));
+         b.returns = refer(eitherResponse(e));
+         b.body = Code('''
         return ${performName(e)} {
-          return ${dataSourceVariableViaBaseMethodItem(e , feature: feature)}.${e.methodName}(params);
+          return ${dataSourceVariableViaBaseMethodItem(e , feature: feature)}.${e.methodName}($paramsArgsName);
         });
-      ''')
-        ..requiredParameters.add(Parameter((b) => b
-          ..name = 'params'
-          ..type = refer(params))));
+      ''');
+         if(!e.isNoParams)
+         b.requiredParameters.add(Parameter((b) => b
+         ..name = 'params'
+         ..type = refer(e.paramsName)));
+       },);
     }).toList();
   }
 

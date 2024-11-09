@@ -15,14 +15,16 @@ class RemoteDataSourceCreator extends BaseRemoteDataSourceCreator {
 
   List<Method> _methodItems() {
     return feature.methodItems.map((e) {
-      String _response = eitherResponse(e);
+      String _response = response(e , isModel: true);
       String params = e.paramsName;
-      return Method((b) => b
-        ..name = e.methodName
-        ..returns = refer(_response)
-        ..requiredParameters.add(Parameter((b) => b
-          ..name = 'params'
-          ..type = refer(params))));
+      return Method( (b) {
+        b.name = e.methodName;
+        b.returns = refer(_response);
+        if(!e.isNoParams)
+        b.requiredParameters.add(Parameter((b) => b
+            ..name = 'params'
+            ..type = refer(params)));
+      },);
     }).toList();
   }
 }

@@ -12,7 +12,7 @@ mixin CleanArchClassGenUtils {
     if (item.isFuture || isFutureOr) {
       String future = isFutureOr ? 'FutureOr' : 'Future';
       if (item.response == BaseResponseNames.noResponse) {
-        return '${future}<Either<Failure, ${item.responseEntity.fold((l) => "NoResponse", (r) => item.responseName,)}>>';
+        return '${future}<Either<Failure, ${item.responseName}>>';
       } else {
         return '${future}<${res}>';
       }
@@ -26,10 +26,10 @@ mixin CleanArchClassGenUtils {
   }
 
   String response(BaseMethodItem item, {bool isModel = false}) {
-    String res = item.responseNameModel;
+    String res = isModel ? item.responseNameModel : item.responseName;
     if (item.isFuture) {
       if (item.response == BaseResponseNames.noResponse) {
-        return "Future<${item.responseName}>";
+        return "Future<${res}>";
       } else {
         return 'Future<$res>';
       }
@@ -41,6 +41,7 @@ mixin CleanArchClassGenUtils {
       }
     }
   }
+
 
   String remoteDatasourceName(CleanArchFeature feature) {
     return '${feature.featureName.firstLetterUpperCase}RemoteDataSource';
@@ -98,6 +99,8 @@ mixin CleanArchClassGenUtils {
   String modelName(String entityName) {
     if (entityName.contains("Entity")) {
       return entityName.replaceAll('Entity', 'Model');
+    }else if (entityName.contains("Model")){
+      return entityName;
     }
     return '${entityName.firstLetterUpperCase}Model';
   }

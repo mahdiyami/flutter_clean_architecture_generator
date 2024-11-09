@@ -8,14 +8,16 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
   String httpRequest(RemoteMethodItem item) {
     String? method = item.settings.method.methodName;
     String? endPoint = item.settings.endPoint;
-    String baseResponse = item.responseName;
-    String model = modelName(item.baseResponseType);
+    String baseResponse = item.responseNameModel;
+    String model = modelName(item.baseResponseTypeModel);
     String queryParameters = item.settings.queryParameters ? ", queryParam: params.toJson()" : "";
     String bodyParameters = item.settings.body ? ", data: params.toJson()" : "";
+    String cast =  item.responseEntity.fold((l) =>  "Map<String, dynamic>" ,(r) => item.baseResponseTypeModel,);
+
 
     String fromJson = item.response == BaseResponseNames.noResponse || _responseHaseFromJson(item.responseEntity)
-        ? "${baseResponse}.fromJson(json as Map<String, dynamic>)"
-        : "${baseResponse}.fromJson(json as Map<String, dynamic>, (json) => ${model}.fromJson(json as Map<String, dynamic>))";
+        ? "${baseResponse}.fromJson(json as $cast)"
+        : "${baseResponse}.fromJson(json as $cast, (json) => ${model}.fromJson(json as Map<String, dynamic>))";
     return 'appRequest.${method}("/${endPoint}" , fromJson: (json) => ${fromJson}${queryParameters}${bodyParameters})';
   }
 

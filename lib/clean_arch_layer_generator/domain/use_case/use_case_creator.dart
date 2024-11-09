@@ -1,6 +1,5 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
-import 'package:flutter_clean_arch_generator/utils/base_method.dart';
 
 class UseCaseCreator extends BaseUseCaseCreator {
   UseCaseCreator({required super.feature});
@@ -12,6 +11,7 @@ class UseCaseCreator extends BaseUseCaseCreator {
         String name = useCaseName(item.methodName);
         String repoName = repositoryName(feature.featureName);
         String params = useCaseParams(item);
+        String paramsArgsName = item.isNoParams ? "": "params";
         String response = item.responseName;
         String methodName = item.methodName;
         b
@@ -36,7 +36,7 @@ class UseCaseCreator extends BaseUseCaseCreator {
               ..name = 'params'
               ..type = refer(params)))
             ..lambda = true
-            ..body = Code('_repository.$methodName(params)')));
+            ..body = Code('_repository.$methodName($paramsArgsName)')));
       },
     );
   }

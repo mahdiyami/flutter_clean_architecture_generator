@@ -4,6 +4,7 @@ enum BaseResponseNames {
   baseResponse(currentName: "BaseResponse"),
   basePaginationResponse(currentName: "BasePaginationResponse"),
   baseListResponse(currentName: "BaseListResponse"),
+  baseTypeResponse(currentName: "BaseTypeResponse"),
   noResponse(currentName: "NoResponse");
 
   final String currentName;

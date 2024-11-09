@@ -1,5 +1,6 @@
 // extends ApiServiceSettings or LocalDataServiceSettings
-import 'package:dartz/dartz.dart';
+import 'dart:ffi';
+
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
 part "local_method_item.p.dart";
@@ -7,9 +8,9 @@ part "remote_method_item.p.dart";
 
 abstract class BaseMethodItem {
   final String methodName;
-  final Either<CleanArchParamsItem , Type> params;
+  final Either<CleanArchParamsItem, Type> params;
   final BaseResponseNames response;
-  final Either<CleanArchEntityItem , Type> responseEntity;
+  final Either<CleanArchEntityItem, Type> responseEntity;
   final bool isFuture;
 
   BaseMethodItem({
@@ -21,25 +22,41 @@ abstract class BaseMethodItem {
   });
 
   String get responseName {
-    if(response == BaseResponseNames.noResponse){
-      return "${responseEntity.fold((l) => l.toString(), (r) => r.toString(),)}";
+    if (response == BaseResponseNames.noResponse) {
+      return "${baseResponseType}";
     }
-   return "${response.currentName}<${responseEntity.fold((l) => l.toString(), (r) => r.toString(),)}>";
+    String responseName = responseEntity.fold(
+      (l) => response.currentName,
+      (r) => BaseResponseNames.baseTypeResponse.currentName,
+    );
+    return "${responseName}<${baseResponseType}>";
   }
+
   String get responseNameModel {
-    if(response == BaseResponseNames.noResponse){
-      return "${responseEntity.fold((l) => l.toString().replaceAll("Entity", 'Model'), (r) => r.toString(),)}";
+    String responseName = responseEntity.fold(
+          (l) => response.currentName,
+          (r) => BaseResponseNames.baseTypeResponse.currentName,
+    );
+    if (response == BaseResponseNames.noResponse) {
+      return baseResponseTypeModel;
     }
-    return "${response.currentName}<${responseEntity.fold((l) => l.toString(), (r) => r.toString(),)}>";
+    return "${responseName}<${baseResponseTypeModel}>";
   }
-  String get baseResponseType => responseEntity.fold((l) => l.toString(), (r) => r.toString());
-  String get baseResponseTypeModel => responseEntity.fold((l) => l.toString().replaceAll("Entity", 'Model'), (r) => r.toString());
-  String get paramsName => params.fold((l) => l.toString(), (r) {
-    if(r == Null){
-      return "NoParams";
+
+  String get baseResponseType => responseEntity.fold((l) => l.toString(), (r) {
+    if(r == Void){
+      return "void";
     }
     return r.toString();
   });
+  String get baseResponseTypeModel => baseResponseType.replaceAll("Entity", 'Model');
+  String get paramsName => params.fold((l) => l.toString(), (r) {
+        if (r == Null) {
+          return "NoParams";
+        }
+        return r.toString();
+      });
+  bool get isNoParams => params.fold((l) => false, (r) => r == Null);
 }
 
 extension BaseMethodItemToRemoteOrLocal on BaseMethodItem {

@@ -7,9 +7,10 @@ mixin FileCreatorUtils {
     File dataSourceFile = File(path);
     if (!(await dataSourceFile.exists())) {
       await dataSourceFile.create(recursive: true);
-      dataSourceFile.writeAsStringSync(content ?? '');
 
     }
+    dataSourceFile.writeAsStringSync(content ?? '');
+
 
   }
 
