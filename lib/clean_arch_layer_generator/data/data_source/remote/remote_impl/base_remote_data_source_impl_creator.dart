@@ -7,7 +7,7 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
 
   String httpRequest(RemoteMethodItem item) {
     String? method = item.settings.method.methodName;
-    String? endPoint = item.settings.endPoint;
+    String? endPoint = item.settings.endPoint.removeIfExistFirstLetterSlash;
     String baseResponse = item.responseNameModel;
     String model = modelName(item.baseResponseTypeModel);
     String queryParameters = item.settings.queryParameters ? ", queryParam: params.toJson()" : "";

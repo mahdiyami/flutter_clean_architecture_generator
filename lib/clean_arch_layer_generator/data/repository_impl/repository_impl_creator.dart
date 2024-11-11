@@ -7,6 +7,9 @@ class RepositoryImplCreator extends BaseRepositoryImplCreator {
   @override
   Class createClass() {
     return Class((b) => b
+      ..annotations.add(refer('LazySingleton').call([
+        CodeExpression(Code('as: ${repositoryName(feature.featureName)}'))
+      ]))
       ..name = repositoryImplName(feature.featureName)
       ..extend = refer(repositoryName(feature.featureName))
       ..constructors.add(Constructor((b) => b..requiredParameters.addAll(_parameters())))
