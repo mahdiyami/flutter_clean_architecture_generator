@@ -16,7 +16,7 @@ class LocalMethodItem extends BaseMethodItem {
     String? methodName,
     Either<CleanArchParamsItem, Type>? params,
     BaseResponseNames? response,
-    Either<CleanArchEntityItem, Type>? responseEntity,
+    ResponseEntity? responseEntity,
     bool? isFuture,
     LocalDataSettings? settings,
   }) {

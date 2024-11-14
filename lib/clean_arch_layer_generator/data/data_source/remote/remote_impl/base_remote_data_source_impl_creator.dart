@@ -12,16 +12,16 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
     String model = modelName(item.baseResponseTypeModel);
     String queryParameters = item.settings.queryParameters ? ", queryParam: params.toJson()" : "";
     String bodyParameters = item.settings.body ? ", data: params.toJson()" : "";
-    String cast =  item.responseEntity.fold((l) =>  "Map<String, dynamic>" ,(r) => item.baseResponseTypeModel,);
+    String cast =  item.responseEntity.fold((l) =>  "Map<String, dynamic>" ,(r) => r.fold((l) => item.baseResponseTypeModel, (r) => "Map<String, dynamic>, (json) => ${model}.fromJson(json as Map<String, dynamic>)" ,),);
 
 
-    String fromJson = item.response == BaseResponseNames.noResponse || _responseHaseFromJson(item.responseEntity)
+    String fromJson = item.response == BaseResponseNames.noResponse || _responseHasFromJson(item.responseEntity)
         ? "${baseResponse}.fromJson(json as $cast)"
         : "${baseResponse}.fromJson(json as $cast, (json) => ${model}.fromJson(json as Map<String, dynamic>))";
     return 'appRequest.${method}("/${endPoint}" , fromJson: (json) => ${fromJson}${queryParameters}${bodyParameters})';
   }
 
-  bool _responseHaseFromJson(Either<CleanArchEntityItem, Type> responseEntity) {
+  bool _responseHasFromJson(ResponseEntity responseEntity) {
     return responseEntity.fold(
       (l) {
         return false;

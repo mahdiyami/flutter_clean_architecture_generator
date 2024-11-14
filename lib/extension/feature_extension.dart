@@ -8,9 +8,9 @@ extension FeatureExtension on CleanArchFeature {
       if (item is LocalMethodItem) {
 
         return [
-          item.copyWith(methodName: _methodName(LocalDataMethodType.save, item) , responseEntity: Right(Void)),
+          item.copyWith(methodName: _methodName(LocalDataMethodType.save, item) , responseEntity: Right(Left(Void))),
           item.copyWith(methodName: _methodName(LocalDataMethodType.get, item) , params: Right(Null) , isFuture: false),
-          item.copyWith(methodName: _methodName(LocalDataMethodType.remove, item ), responseEntity: Right(Void) , params: Right(Null)),
+          item.copyWith(methodName: _methodName(LocalDataMethodType.remove, item ), responseEntity: Right(Left(Void)) , params: Right(Null)),
         ];
       }
       return [item];

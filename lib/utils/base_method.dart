@@ -5,12 +5,12 @@ import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
 
 part "local_method_item.p.dart";
 part "remote_method_item.p.dart";
-
+typedef ResponseEntity = Either<CleanArchEntityItem, Either<Type, String>>;
 abstract class BaseMethodItem {
   final String methodName;
   final Either<CleanArchParamsItem, Type> params;
   final BaseResponseNames response;
-  final Either<CleanArchEntityItem, Type> responseEntity;
+  final ResponseEntity responseEntity;
   final bool isFuture;
 
   BaseMethodItem({
@@ -26,8 +26,10 @@ abstract class BaseMethodItem {
       return "${baseResponseType}";
     }
     String responseName = responseEntity.fold(
-      (l) => response.currentName,
-      (r) => BaseResponseNames.baseTypeResponse.currentName,
+          (l) => response.currentName,
+          (r) {
+        return r.fold((l) => BaseResponseNames.baseTypeResponse.currentName, (r) => response.currentName,);
+      },
     );
     return "${responseName}<${baseResponseType}>";
   }
@@ -35,7 +37,9 @@ abstract class BaseMethodItem {
   String get responseNameModel {
     String responseName = responseEntity.fold(
           (l) => response.currentName,
-          (r) => BaseResponseNames.baseTypeResponse.currentName,
+          (r) {
+           return r.fold((l) => BaseResponseNames.baseTypeResponse.currentName, (r) => response.currentName,);
+          },
     );
     if (response == BaseResponseNames.noResponse) {
       return baseResponseTypeModel;
@@ -44,10 +48,13 @@ abstract class BaseMethodItem {
   }
 
   String get baseResponseType => responseEntity.fold((l) => l.toString(), (r) {
-    if(r == Void){
-      return "void";
-    }
-    return r.toString();
+
+    return r.fold((l) {
+      if(l == Void){
+        return "void";
+      }
+      return l.toString();
+    },  (r) => r.toString(),);
   });
   String get baseResponseTypeModel => baseResponseType.replaceAll("Entity", 'Model');
   String get paramsName => params.fold((l) => l.toString(), (r) {
