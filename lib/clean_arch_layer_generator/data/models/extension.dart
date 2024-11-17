@@ -6,17 +6,20 @@ extension ConvertModelCreatorToCode on BaseModelCreator {
   void modelToCodeAllAndGenerateFiles(CleanArchFeature feature) {
     String code = '';
     for (CleanArchEntityItem item in feature.entities) {
-      code = _toCode(item);
-      CleanArchDataFileGenerator(feature).createModelFile(code , item: item);
-
+      if (!item.abstractOnly) {
+        code = _toCode(item);
+        CleanArchDataFileGenerator(feature).createModelFile(code, item: item);
+      }
     }
   }
+
   void sharedModelToCodeAllAndGenerateFiles(List<CleanArchEntityItem> shared) {
     String code = '';
     for (CleanArchEntityItem item in shared) {
-      code = _toCode(item);
-      CleanArchSharedFileGenerator().createSharedModelFile(code , item: item);
-
+      if (!item.abstractOnly) {
+        code = _toCode(item);
+        CleanArchSharedFileGenerator().createSharedModelFile(code, item: item);
+      }
     }
   }
 }
