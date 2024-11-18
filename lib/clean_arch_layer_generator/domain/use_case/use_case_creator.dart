@@ -32,12 +32,18 @@ class UseCaseCreator extends BaseUseCaseCreator {
             ..annotations.add(refer('override'))
             ..name = 'call'
             ..returns = refer(eitherResponse(item))
-            ..requiredParameters.add(Parameter((b) => b
-              ..name = 'params'
-              ..type = refer(params)))
+            ..requiredParameters.addAll(
+              [
+                Parameter((b) {
+                  b.name = 'params';
+                  b.type = refer(params);
+                })
+              ]
+            )
             ..lambda = true
             ..body = Code('_repository.$methodName($paramsArgsName)')));
       },
     );
   }
+
 }

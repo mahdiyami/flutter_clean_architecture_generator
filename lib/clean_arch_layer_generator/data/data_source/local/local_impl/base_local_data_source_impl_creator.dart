@@ -1,7 +1,7 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
-import 'package:flutter_clean_arch_generator/utils/base_method.dart';
-import 'package:flutter_clean_arch_generator/utils/base_method.dart';
+import 'package:flutter_clean_arch_generator/method/base_method.dart';
+import 'package:flutter_clean_arch_generator/method/base_method.dart';
 enum LocalDataMethodType { get, save, remove }
 abstract class BaseLocalDataSourceImplCreator with CleanArchClassGenUtils {
   final CleanArchFeature feature;

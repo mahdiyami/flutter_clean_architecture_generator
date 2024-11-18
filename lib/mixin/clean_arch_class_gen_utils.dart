@@ -1,7 +1,8 @@
+import 'package:code_builder/code_builder.dart';
 import 'package:flutter_clean_arch_generator/clean_arch_generator_config.dart';
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/data_source/local/local_impl/base_local_data_source_impl_creator.dart';
 import 'package:flutter_clean_arch_generator/extension/string.dart';
-import 'package:flutter_clean_arch_generator/utils/base_method.dart';
+import 'package:flutter_clean_arch_generator/method/base_method.dart';
 
 mixin CleanArchClassGenUtils {
   String futureOrBasicResponse(String item) {
@@ -40,6 +41,16 @@ mixin CleanArchClassGenUtils {
         return res;
       }
     }
+  }
+  List<Parameter> handlePathParams(BaseMethodItem item) {
+    if (item is RemoteMethodItem && item.settings.pathParams != null)
+      return item.settings.pathParams!.map((e) {
+        return Parameter((b) {
+          b.name = e.key;
+          b.type = refer(e.type.toString());
+        });
+      }).toList();
+    return [];
   }
 
 

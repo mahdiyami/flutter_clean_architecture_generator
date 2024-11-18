@@ -4,7 +4,7 @@ import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/dat
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/data_source/local/local_impl/local_data_source_impl_creator.dart';
 import 'package:flutter_clean_arch_generator/extension/feature_extension.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
-import 'package:flutter_clean_arch_generator/utils/base_method.dart';
+import 'package:flutter_clean_arch_generator/method/base_method.dart';
 
 class FeatureCreator extends BaseFeatureCreator with CleanArchClassGenUtils {
   FeatureCreator({required super.feature});

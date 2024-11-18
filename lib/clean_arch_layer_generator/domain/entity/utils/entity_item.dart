@@ -4,13 +4,17 @@ import 'package:flutter_clean_arch_generator/base/base_property.dart';
 class CleanArchEntityItem {
   final bool abstractOnly;
   final Either<CleanArchEntityItem , Type>? extendsEntity;
+  final bool isList;
   final String entityName;
   final List<EntityProperty> entityParams;
 
-  const CleanArchEntityItem({required this.entityName, required this.entityParams , this.abstractOnly = false , this.extendsEntity});
+  const CleanArchEntityItem({required this.entityName, required this.entityParams , this.abstractOnly = false , this.extendsEntity , this.isList = false});
 
   @override
   String toString() {
+    if(isList){
+      return 'List<${entityName}Entity>';
+    }
     return '${entityName}Entity';
   }
   String get extendsEntityName {

@@ -1,7 +1,7 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/data_source/local/local_impl/base_local_data_source_impl_creator.dart';
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/data/data_source/remote/base_remote_data_source_creator.dart';
-import 'package:flutter_clean_arch_generator/utils/base_method.dart';
+import 'package:flutter_clean_arch_generator/method/base_method.dart';
 
 import 'base_local_data_source_creator.dart';
 

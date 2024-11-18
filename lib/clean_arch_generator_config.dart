@@ -1,6 +1,6 @@
 import 'package:flutter_clean_arch_generator/clean_arch_layer_generator/domain/params/utils/params_item.dart';
 import 'package:flutter_clean_arch_generator/flutter_clean_arch_generator.dart';
-import 'package:flutter_clean_arch_generator/utils/base_method.dart';
+import 'package:flutter_clean_arch_generator/method/base_method.dart';
 
 abstract class CleanArchGeneratorConfig {
   List<CleanArchEntityItem> get sharedEntities;
