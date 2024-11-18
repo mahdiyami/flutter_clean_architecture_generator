@@ -7,7 +7,7 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
 
   String httpRequest(RemoteMethodItem item) {
     String? method = item.settings.method.methodName;
-    String? endPoint = item.settings.endPoint.removeIfExistFirstLetterSlash;
+    String? endPoint = _handleEndpoint(item);
     String baseResponse = item.responseNameModel;
     String model = modelName(item.baseResponseTypeModel);
     String queryParameters = item.settings.queryParameters ? ", queryParam: params.toJson()" : "";
@@ -29,6 +29,16 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
       (r) => true,
     );
   }
+  String _handleEndpoint(RemoteMethodItem item){
+    String? endPoint = item.settings.endPoint.removeIfExistFirstLetterSlash;
 
+    if(item.settings.pathParams !=null && item.settings.pathParams!.isNotEmpty){
+
+      List<String> pathParams = item.settings.pathParams!.map((e) => "\${${e.key}}").toList();
+      String result = "$endPoint/${pathParams.join('/')}";
+      return result;
+    }
+    return endPoint;
+  }
   Class createClass();
 }
