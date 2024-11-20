@@ -7,8 +7,7 @@ abstract class BaseUseCaseCreator with CleanArchClassGenUtils {
   final CleanArchFeature feature;
   const BaseUseCaseCreator({required this.feature});
 
-  String useCaseParams(BaseMethodItem item) => item.paramsName;
-   String useCaseResponseType(BaseMethodItem item) => item.baseResponseType;
+    String useCaseResponseType(BaseMethodItem item) => item.baseResponseType;
 
   String get baseUseCaseName => 'UseCase';
 

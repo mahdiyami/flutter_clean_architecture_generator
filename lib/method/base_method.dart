@@ -8,19 +8,21 @@ part "remote_method_item.p.dart";
 typedef ResponseEntity = Either<CleanArchEntityItem, Either<Type, String>>;
 abstract class BaseMethodItem {
   final String methodName;
-  final Either<CleanArchParamsItem, Type> params;
+  final Either<CleanArchParamsItem, Type> params1;
+  final Either<CleanArchParamsItem, Type> pathParams ;
   final BaseResponseNames response;
   final ResponseEntity responseEntity;
   final bool isFuture;
 
   BaseMethodItem({
     required this.methodName,
-    required this.params,
+      this.params1 = const Right(Null),
+      this.pathParams  = const Right(Null),
     required this.response,
     required this.responseEntity,
     this.isFuture = true,
   });
-
+//example BaseResponse<ExampleEntity>
   String get responseName {
     if (response == BaseResponseNames.noResponse) {
       return "${baseResponseType}";
@@ -33,7 +35,7 @@ abstract class BaseMethodItem {
     );
     return "${responseName}<${baseResponseType}>";
   }
-
+//example BaseResponse<ExampleModel>
   String get responseNameModel {
     String responseName = responseEntity.fold(
           (l) => response.currentName,
@@ -48,7 +50,6 @@ abstract class BaseMethodItem {
   }
 
   String get baseResponseType => responseEntity.fold((l) => l.toString(), (r) {
-
     return r.fold((l) {
       if(l == Void){
         return "void";
@@ -57,13 +58,20 @@ abstract class BaseMethodItem {
     },  (r) => r.toString(),);
   });
   String get baseResponseTypeModel => baseResponseType.replaceAll("Entity", 'Model');
-  String get paramsName => params.fold((l) => l.toString(), (r) {
+  String get params1Name => params1.fold((l) => l.toString(), (r) {
         if (r == Null) {
           return "NoParams";
         }
         return r.toString();
       });
-  bool get isNoParams => params.fold((l) => false, (r) => r == Null);
+  String get pathParamsName => params1.fold((l) => l.toString(), (r) {
+    if (r == Null) {
+      return "NoParams";
+    }
+    return r.toString();
+  });
+  bool get hasParams1 => params1.fold((l) => false, (r) => r == Null);
+  bool get hasPathParams => pathParams .fold((l) => false, (r) => r == Null);
 }
 
 extension BaseMethodItemToRemoteOrLocal on BaseMethodItem {

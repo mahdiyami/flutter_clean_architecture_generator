@@ -18,7 +18,8 @@ class RemoteMethodItem extends BaseMethodItem {
 
   RemoteMethodItem({
     required super.methodName,
-    required super.params,
+      super.params1,
+      super.pathParams,
     required super.response,
     required super.responseEntity,
       super.isFuture,

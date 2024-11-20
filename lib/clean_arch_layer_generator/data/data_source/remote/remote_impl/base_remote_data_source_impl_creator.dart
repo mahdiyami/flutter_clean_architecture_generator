@@ -29,16 +29,68 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
       (r) => true,
     );
   }
-  String _handleEndpoint(RemoteMethodItem item){
-    String? endPoint = item.settings.endPoint.removeIfExistFirstLetterSlash;
+  String _handleEndpoint(BaseMethodItem item) {
+    // مقدار اولیه endpoint
+    String? endPoint = item.methodName;
 
-    if(item.settings.pathParams !=null && item.settings.pathParams!.isNotEmpty){
+    // بررسی params
+    final bool isParamsPathParams = item.params1.fold(
+          (cleanArchParamsItem) => cleanArchParamsItem.isPathParams,
+          (_) => false,
+    );
 
-      List<String> pathParams = item.settings.pathParams!.map((e) => "\${${e.key}}").toList();
-      String result = "$endPoint/${pathParams.join('/')}";
-      return result;
+    // بررسی params2
+    final bool isPathParamsPathParams = item.pathParams .fold(
+          (cleanArchParamsItem) => cleanArchParamsItem.isPathParams,
+          (_) => false,
+    );
+
+    // قانون: فقط یکی می‌تواند true باشد
+    if (isParamsPathParams && isPathParamsPathParams) {
+      throw Exception(
+          'Only one of params or params2 can have isPathParams set to true.');
     }
-    return endPoint;
+
+    // تابع کمکی برای استخراج اطلاعات paramsProperty
+    String _buildParamsPropertiesString(List<ParamsProperty> properties) {
+      return properties
+          .map((prop) =>
+      '${prop.objectNameKey}={${prop.objectTypeToString.toString()}}') // تنظیم مقادیر پارامترها
+          .join('&'); // با & جدا می‌کنیم
+    }
+
+    // هندل کردن params
+    if (isParamsPathParams) {
+      final cleanArchParams = item.params1.fold(
+            (cleanArchParamsItem) => cleanArchParamsItem,
+            (type) => type,
+      );
+
+      if (cleanArchParams is CleanArchParamsItem) {
+        endPoint = '$endPoint?${_buildParamsPropertiesString(cleanArchParams.paramsProperty)}';
+      } else {
+        endPoint = '$endPoint?value=${cleanArchParams.toString()}';
+      }
+    }
+
+    // هندل کردن params2
+    if (isPathParamsPathParams) {
+      final cleanArchParams = item.pathParams.fold(
+            (cleanArchParamsItem) => cleanArchParamsItem,
+            (type) => type,
+      );
+
+      if (cleanArchParams is CleanArchParamsItem) {
+        endPoint = '$endPoint?${_buildParamsPropertiesString(cleanArchParams.paramsProperty)}';
+      } else {
+        endPoint = '$endPoint?value=${cleanArchParams.toString()}';
+      }
+    }
+
+    // حذف / اضافی از ابتدای endpoint
+    return endPoint.removeIfExistFirstLetterSlash ?? endPoint!;
   }
+
+
   Class createClass();
 }

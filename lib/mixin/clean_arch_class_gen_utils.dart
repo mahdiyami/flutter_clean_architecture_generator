@@ -42,16 +42,7 @@ mixin CleanArchClassGenUtils {
       }
     }
   }
-  List<Parameter> handlePathParams(BaseMethodItem item) {
-    if (item is RemoteMethodItem && item.settings.pathParams != null)
-      return item.settings.pathParams!.map((e) {
-        return Parameter((b) {
-          b.name = e.key;
-          b.type = refer(e.type.toString());
-        });
-      }).toList();
-    return [];
-  }
+
 
 
   String remoteDatasourceName(CleanArchFeature feature) {

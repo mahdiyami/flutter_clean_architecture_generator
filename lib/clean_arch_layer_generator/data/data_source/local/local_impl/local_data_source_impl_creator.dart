@@ -39,19 +39,19 @@ class LocalDataSourceImplCreator extends BaseLocalDataSourceImplCreator {
         m.returns = refer('Future<void>');
         m.requiredParameters.add(Parameter((p) => p
           ..name = 'params'
-          ..type = refer(item.paramsName.toString())));
+          ..type = refer(item.params1Name.toString())));
         m.modifier = MethodModifier.async;
         m.body = Code('''
-          await localRequest.saveData<${_getType(item.params)}>(value: ${_saveData(item.params)}, key: ${cacheKey(item)});
+          await localRequest.saveData<${_getType(item.params1)}>(value: ${_saveData(item.params1)}, key: ${cacheKey(item)});
       ''');
         m.annotations.add(CodeExpression(Code('override')));
       }), // Add method: getToken
       Method((m) {
         m.name = methodName(LocalDataMethodType.get, item);
-        m.returns = refer(_getType(item.params));
+        m.returns = refer(_getType(item.params1));
         m.body = Code('''
-        final data = localRequest.getData<${_getType(item.params)}>(${cacheKey(item)});
-        return ${_getData(item.params)};
+        final data = localRequest.getData<${_getType(item.params1)}>(${cacheKey(item)});
+        return ${_getData(item.params1)};
       ''');
         m.annotations.add(CodeExpression(Code('override')));
       }), // Add method: removeToken

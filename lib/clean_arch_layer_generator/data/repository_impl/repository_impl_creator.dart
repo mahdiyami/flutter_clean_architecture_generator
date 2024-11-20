@@ -49,7 +49,7 @@ class RepositoryImplCreator extends BaseRepositoryImplCreator {
 
   List<Method> _methodItems() {
     return feature.methodItems.map((e) {
-      String paramsArgsName = e.isNoParams ?  "":'params';
+      String paramsArgsName = e.hasParams1 ?  "":'params';
 
        return Method((b) {
          b.name = e.methodName;
@@ -60,10 +60,10 @@ class RepositoryImplCreator extends BaseRepositoryImplCreator {
           return ${dataSourceVariableViaBaseMethodItem(e , feature: feature)}.${e.methodName}($paramsArgsName);
         });
       ''');
-         if(!e.isNoParams)
+         if(!e.hasParams1)
          b.requiredParameters.add(Parameter((b) => b
          ..name = 'params'
-         ..type = refer(e.paramsName)));
+         ..type = refer(e.params1Name)));
        },);
     }).toList();
   }
