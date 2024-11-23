@@ -5,7 +5,7 @@ class LocalMethodItem extends BaseMethodItem {
 
   LocalMethodItem({
     required super.methodName,
-      super.params1,
+      super.params,
       super.pathParams,
     required super.response,
     required super.responseEntity,
@@ -15,7 +15,7 @@ class LocalMethodItem extends BaseMethodItem {
 
   LocalMethodItem copyWith({
     String? methodName,
-    Either<CleanArchParamsItem, Type>? params1,
+    Either<CleanArchParamsItem, Type>? params,
     Either<CleanArchParamsItem, Type>? pathParams,
     BaseResponseNames? response,
     ResponseEntity? responseEntity,
@@ -24,7 +24,7 @@ class LocalMethodItem extends BaseMethodItem {
   }) {
     return LocalMethodItem(
       methodName: methodName ?? super.methodName,
-      params1: params1 ?? super.params1,
+      params: params ?? super.params,
       pathParams: pathParams ?? super.pathParams,
       response: response ?? super.response,
       responseEntity: responseEntity ?? super.responseEntity,

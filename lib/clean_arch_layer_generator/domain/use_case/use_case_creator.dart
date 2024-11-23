@@ -10,17 +10,17 @@ class UseCaseCreator extends BaseUseCaseCreator {
       (b) {
         String name = useCaseName(item.methodName);
         String repoName = repositoryName(feature.featureName);
-        String params1 = item.params1Name;
+        String params = item.paramsName;
         String pathParams = item.pathParamsName;
-        String params1ArgsName = item.hasParams1 ? "": "params1";
-        String params2ArgsName = item.hasPathParams ? "": ",pathParams";
+        String paramsArgsName = item.hasParams ? "params,": "";
+        String params2ArgsName = item.hasPathParams ? "pathParams" : "";
         String response = item.responseName;
         String methodName = item.methodName;
         b
           ..annotations.add(refer('LazySingleton').call([]))
           ..name = name
           // example extends: 'UseCase<LoginResponse, LoginParams>'
-          ..extend = refer('$baseUseCaseName<$response, $params1 , $pathParams>')
+          ..extend = refer('$baseUseCaseName<$response, $params , $pathParams>')
           ..fields.add(Field((b) => b
             ..modifier = FieldModifier.final$
             ..name = '_repository'
@@ -37,8 +37,8 @@ class UseCaseCreator extends BaseUseCaseCreator {
             ..requiredParameters.addAll(
               [
                 Parameter((b) {
-                  b.name = 'params1';
-                  b.type = refer(params1);
+                  b.name = 'params';
+                  b.type = refer(params);
                 }),
                 Parameter((b) {
                   b.name = 'pathParams';
@@ -47,7 +47,7 @@ class UseCaseCreator extends BaseUseCaseCreator {
               ]
             )
             ..lambda = true
-            ..body = Code('_repository.$methodName($params1ArgsName $params2ArgsName)')));
+            ..body = Code('_repository.$methodName($paramsArgsName $params2ArgsName)')));
       },
     );
   }

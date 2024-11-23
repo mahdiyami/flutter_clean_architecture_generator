@@ -21,17 +21,22 @@ class RemoteDataSourceImplCreator extends BaseRemoteDataSourceImplCreator {
 
   List<Method> _methodItems() {
     return feature.methodItems.map((e) {
-      String params = e.params1Name;
+      String params = e.paramsName;
+      String pathParams = e.pathParamsName;
       return Method((b) {
         b.annotations.add(refer('override'));
            b.name = e.methodName;
           b.returns = refer(response(e , isModel: true));
           b.lambda = true;
           b.body = Code(httpRequest(e.toRemoteMethodItem));
-          if(!e.hasParams1)
+          if(e.hasParams)
           b.requiredParameters.add(Parameter((b) => b
             ..name = 'params'
             ..type = refer(params)));
+        if(e.hasPathParams)
+          b.requiredParameters.add(Parameter((b) => b
+            ..name = 'pathParams'
+            ..type = refer(pathParams)));
       },);
     }).toList();
   }

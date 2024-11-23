@@ -8,7 +8,7 @@ part "remote_method_item.p.dart";
 typedef ResponseEntity = Either<CleanArchEntityItem, Either<Type, String>>;
 abstract class BaseMethodItem {
   final String methodName;
-  final Either<CleanArchParamsItem, Type> params1;
+  final Either<CleanArchParamsItem, Type> params;
   final Either<CleanArchParamsItem, Type> pathParams ;
   final BaseResponseNames response;
   final ResponseEntity responseEntity;
@@ -16,7 +16,7 @@ abstract class BaseMethodItem {
 
   BaseMethodItem({
     required this.methodName,
-      this.params1 = const Right(Null),
+      this.params = const Right(Null),
       this.pathParams  = const Right(Null),
     required this.response,
     required this.responseEntity,
@@ -58,20 +58,20 @@ abstract class BaseMethodItem {
     },  (r) => r.toString(),);
   });
   String get baseResponseTypeModel => baseResponseType.replaceAll("Entity", 'Model');
-  String get params1Name => params1.fold((l) => l.toString(), (r) {
+  String get paramsName => params.fold((l) => l.toString(), (r) {
         if (r == Null) {
           return "NoParams";
         }
         return r.toString();
       });
-  String get pathParamsName => params1.fold((l) => l.toString(), (r) {
+  String get pathParamsName => pathParams.fold((l) => l.toString(), (r) {
     if (r == Null) {
       return "NoParams";
     }
     return r.toString();
   });
-  bool get hasParams1 => params1.fold((l) => false, (r) => r == Null);
-  bool get hasPathParams => pathParams .fold((l) => false, (r) => r == Null);
+  bool get hasParams => params.fold((l) => true, (r) => r != Null);
+  bool get hasPathParams => pathParams .fold((l) => true, (r) => r != Null);
 }
 
 extension BaseMethodItemToRemoteOrLocal on BaseMethodItem {

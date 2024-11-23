@@ -12,8 +12,13 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
     String model = modelName(item.baseResponseTypeModel);
     String queryParameters = item.settings.queryParameters ? ", queryParam: params.toJson()" : "";
     String bodyParameters = item.settings.body ? ", data: params.toJson()" : "";
-    String cast =  item.responseEntity.fold((l) =>  "Map<String, dynamic>" ,(r) => r.fold((l) => item.baseResponseTypeModel, (r) => "Map<String, dynamic>, (json) => ${model}.fromJson(json as Map<String, dynamic>)" ,),);
-
+    String cast = item.responseEntity.fold(
+      (l) => "Map<String, dynamic>",
+      (r) => r.fold(
+        (l) => item.baseResponseTypeModel,
+        (r) => "Map<String, dynamic>, (json) => ${model}.fromJson(json as Map<String, dynamic>)",
+      ),
+    );
 
     String fromJson = item.response == BaseResponseNames.noResponse || _responseHasFromJson(item.responseEntity)
         ? "${baseResponse}.fromJson(json as $cast)"
@@ -29,67 +34,40 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
       (r) => true,
     );
   }
+
   String _handleEndpoint(BaseMethodItem item) {
     // مقدار اولیه endpoint
     String? endPoint = item.methodName;
 
-    // بررسی params
-    final bool isParamsPathParams = item.params1.fold(
-          (cleanArchParamsItem) => cleanArchParamsItem.isPathParams,
-          (_) => false,
-    );
-
-    // بررسی params2
-    final bool isPathParamsPathParams = item.pathParams .fold(
-          (cleanArchParamsItem) => cleanArchParamsItem.isPathParams,
-          (_) => false,
-    );
-
-    // قانون: فقط یکی می‌تواند true باشد
-    if (isParamsPathParams && isPathParamsPathParams) {
-      throw Exception(
-          'Only one of params or params2 can have isPathParams set to true.');
-    }
-
-    // تابع کمکی برای استخراج اطلاعات paramsProperty
-    String _buildParamsPropertiesString(List<ParamsProperty> properties) {
+    // تابع کمکی برای استخراج مقدار واقعی paramsProperty و اضافه کردن به مسیر
+    String _buildParamsValuesPath(List<ParamsProperty> properties) {
       return properties
-          .map((prop) =>
-      '${prop.objectNameKey}={${prop.objectTypeToString.toString()}}') // تنظیم مقادیر پارامترها
-          .join('&'); // با & جدا می‌کنیم
+          .map((prop) => '\${pathParams.${prop.objectNameKey}}') // تبدیل به ${pathParams.key}
+          .join('/'); // جدا کردن با /
     }
 
-    // هندل کردن params
-    if (isParamsPathParams) {
-      final cleanArchParams = item.params1.fold(
-            (cleanArchParamsItem) => cleanArchParamsItem,
-            (type) => type,
-      );
-
-      if (cleanArchParams is CleanArchParamsItem) {
-        endPoint = '$endPoint?${_buildParamsPropertiesString(cleanArchParams.paramsProperty)}';
-      } else {
-        endPoint = '$endPoint?value=${cleanArchParams.toString()}';
-      }
-    }
-
-    // هندل کردن params2
-    if (isPathParamsPathParams) {
+    // بررسی وجود pathParams
+    if (item.hasPathParams) {
       final cleanArchParams = item.pathParams.fold(
             (cleanArchParamsItem) => cleanArchParamsItem,
             (type) => type,
       );
 
       if (cleanArchParams is CleanArchParamsItem) {
-        endPoint = '$endPoint?${_buildParamsPropertiesString(cleanArchParams.paramsProperty)}';
+        endPoint = '$endPoint/${_buildParamsValuesPath(cleanArchParams.paramsProperty)}';
       } else {
-        endPoint = '$endPoint?value=${cleanArchParams.toString()}';
+        endPoint = '$endPoint/\${pathParams.${cleanArchParams.toString()}}';
       }
     }
 
     // حذف / اضافی از ابتدای endpoint
-    return endPoint.removeIfExistFirstLetterSlash ?? endPoint!;
+    return endPoint.removeIfExistFirstLetterSlash;
   }
+
+
+
+
+
 
 
   Class createClass();

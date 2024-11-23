@@ -7,9 +7,7 @@ class RepositoryImplCreator extends BaseRepositoryImplCreator {
   @override
   Class createClass() {
     return Class((b) => b
-      ..annotations.add(refer('LazySingleton').call([
-        CodeExpression(Code('as: ${repositoryName(feature.featureName)}'))
-      ]))
+      ..annotations.add(refer('LazySingleton').call([CodeExpression(Code('as: ${repositoryName(feature.featureName)}'))]))
       ..name = repositoryImplName(feature.featureName)
       ..extend = refer(repositoryName(feature.featureName))
       ..constructors.add(Constructor((b) => b..requiredParameters.addAll(_parameters())))
@@ -19,53 +17,59 @@ class RepositoryImplCreator extends BaseRepositoryImplCreator {
 
   List<Parameter> _parameters() {
     return [
-      if(feature.hasRemoteDataSource)
-      Parameter((b) => b
-        ..name = remoteDatasourceVariableName(feature)
-        ..named = true
-        ..toThis = true),
-      if(feature.hasLocalDataSource)
-      Parameter((b) => b
-        ..name = localDatasourceVariableName(feature)
-        ..named = true
-        ..toThis = true),
+      if (feature.hasRemoteDataSource)
+        Parameter((b) => b
+          ..name = remoteDatasourceVariableName(feature)
+          ..named = true
+          ..toThis = true),
+      if (feature.hasLocalDataSource)
+        Parameter((b) => b
+          ..name = localDatasourceVariableName(feature)
+          ..named = true
+          ..toThis = true),
     ];
   }
 
   List<Field> _fields() {
     return [
-      if(feature.hasRemoteDataSource)
-      Field((b) => b
-        ..name = remoteDatasourceVariableName(feature)
-        ..modifier = FieldModifier.final$
-        ..type = refer(remoteDatasourceName(feature))),
-      if(feature.hasLocalDataSource)
-      Field((b) => b
-        ..name = localDatasourceVariableName(feature)
-        ..modifier = FieldModifier.final$
-        ..type = refer(localDatasourceName(feature))),
+      if (feature.hasRemoteDataSource)
+        Field((b) => b
+          ..name = remoteDatasourceVariableName(feature)
+          ..modifier = FieldModifier.final$
+          ..type = refer(remoteDatasourceName(feature))),
+      if (feature.hasLocalDataSource)
+        Field((b) => b
+          ..name = localDatasourceVariableName(feature)
+          ..modifier = FieldModifier.final$
+          ..type = refer(localDatasourceName(feature))),
     ];
   }
 
   List<Method> _methodItems() {
     return feature.methodItems.map((e) {
-      String paramsArgsName = e.hasParams1 ?  "":'params';
+      String paramsArgsName = e.hasParams ? "params,": "";
+      String params2ArgsName = e.hasPathParams ? "pathParams" : "";
 
-       return Method((b) {
-         b.name = e.methodName;
-         b.annotations.add(refer('override'));
-         b.returns = refer(eitherResponse(e));
-         b.body = Code('''
+      return Method(
+        (b) {
+          b.name = e.methodName;
+          b.annotations.add(refer('override'));
+          b.returns = refer(eitherResponse(e));
+          b.body = Code('''
         return ${performName(e)} {
-          return ${dataSourceVariableViaBaseMethodItem(e , feature: feature)}.${e.methodName}($paramsArgsName);
+          return ${dataSourceVariableViaBaseMethodItem(e, feature: feature)}.${e.methodName}($paramsArgsName $params2ArgsName);
         });
       ''');
-         if(!e.hasParams1)
-         b.requiredParameters.add(Parameter((b) => b
-         ..name = 'params'
-         ..type = refer(e.params1Name)));
-       },);
+          if (e.hasParams)
+            b.requiredParameters.add(Parameter((b) => b
+              ..name = 'params'
+              ..type = refer(e.paramsName)));
+          if (e.hasPathParams)
+            b.requiredParameters.add(Parameter((b) => b
+              ..name = 'pathParams'
+              ..type = refer(e.pathParamsName)));
+        },
+      );
     }).toList();
   }
-
 }

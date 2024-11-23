@@ -15,18 +15,20 @@ class RepositoryCreator extends BaseRepositoryCreator {
 
   List<Method> _methodItems() {
     return feature.methodItems.map((e) {
-      Parameter params = Parameter((b) => b
-        ..name = 'params'
-        ..type = refer(e.params1Name));
-      Parameter pathParams = Parameter((b) => b
-        ..name = 'pathParams'
-        ..type = refer(e.pathParamsName));
+      String params = e.paramsName;
+      String pathParams = e.pathParamsName;
       return Method((b) {
 
           b.name = e.methodName;
           b.returns = refer(eitherResponse(e));
-          if(!e.hasParams1)
-          b.requiredParameters.addAll([params , pathParams]);
+          if(e.hasParams)
+            b.requiredParameters.add(Parameter((b) => b
+              ..name = 'params'
+              ..type = refer(params)));
+          if(e.hasPathParams)
+            b.requiredParameters.add(Parameter((b) => b
+              ..name = 'pathParams'
+              ..type = refer(pathParams)));
        },);
     }).toList();
   }
