@@ -15,7 +15,7 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
     String cast = item.responseEntity.fold(
       (l) => "Map<String, dynamic>",
       (r) => r.fold(
-        (l) => item.baseResponseTypeModel,
+        (l) => "Map<String, dynamic>",
         (r) => "Map<String, dynamic>, (json) => ${model}.fromJson(json as Map<String, dynamic>)",
       ),
     );
