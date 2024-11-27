@@ -36,15 +36,14 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
   }
 
   String _handleEndpoint(RemoteMethodItem item) {
-     String? endPoint = item.settings.endPoint;
+     String? endPoint ="${item.settings.endPoint.removeIfExistLastLetterSlash}/";
 
      String _buildParamsValuesPath(List<ParamsProperty> properties) {
       return properties
           .map((prop) => '\${pathParams.${prop.objectNameKey}}') // تبدیل به ${pathParams.key}
-          .join('/'); // جدا کردن با /
+          .join('/');
     }
 
-    // بررسی وجود pathParams
     if (item.hasPathParams) {
       final cleanArchParams = item.pathParams.fold(
             (cleanArchParamsItem) => cleanArchParamsItem,
@@ -58,7 +57,6 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
       }
     }
 
-    // حذف / اضافی از ابتدای endpoint
     return endPoint.removeIfExistFirstLetterSlash;
   }
 
