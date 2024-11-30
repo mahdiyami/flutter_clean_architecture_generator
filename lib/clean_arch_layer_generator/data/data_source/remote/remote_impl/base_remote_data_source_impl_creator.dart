@@ -36,9 +36,9 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
   }
 
   String _handleEndpoint(RemoteMethodItem item) {
-     String? endPoint ="${item.settings.endPoint.removeIfExistLastLetterSlash}/";
+    String? endPoint = "${item.settings.endPoint.removeIfExistLastLetterSlash}/";
 
-     String _buildParamsValuesPath(List<ParamsProperty> properties) {
+    String _buildParamsValuesPath(List<ParamsProperty> properties) {
       return properties
           .map((prop) => '\${pathParams.${prop.objectNameKey}}') // تبدیل به ${pathParams.key}
           .join('/');
@@ -46,8 +46,8 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
 
     if (item.hasPathParams) {
       final cleanArchParams = item.pathParams.fold(
-            (cleanArchParamsItem) => cleanArchParamsItem,
-            (type) => type,
+        (cleanArchParamsItem) => cleanArchParamsItem,
+        (type) => type,
       );
 
       if (cleanArchParams is CleanArchParamsItem) {
@@ -59,12 +59,6 @@ abstract class BaseRemoteDataSourceImplCreator with CleanArchClassGenUtils {
 
     return endPoint.removeIfExistFirstLetterSlash;
   }
-
-
-
-
-
-
 
   Class createClass();
 }
